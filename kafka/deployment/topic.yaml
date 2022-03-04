@@ -1,0 +1,10 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: data-ready
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  topicName: data_ready
+  partitions: 1
+  replicas: 1
