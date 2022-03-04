@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-processor
+  labels:
+    app: queue-processor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: queue-processor
+  template:
+    metadata:
+      labels:
+        app: queue-processor
+    spec:
+      containers:
+        - name: queue-processor
+          image: ghcr.io/autoreduction/autoreduce:latest
+          envFrom:
+            - configMapRef:
+                name: qp-config
+          volumeMounts:
+            - name: autoreduce-home-root
+              mountPath: /home/isisautoreduce/.autoreduce
+            - name: archive-mount
+              mountPath: /isis
+            - name: instrument-mount
+              mountPath: /instrument
+          command: ["autoreduce-qp-start"]
+
+      volumes:
+        - name: autoreduce-home-root
+          emptyDir: {}
+        - name: archive-mount
+          emptyDir: {}
+        - name: instrument-mount
+          emptyDir: {}
