@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autoreduce-frontend
+  labels:
+    app: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/autoreduction/autoreduce-frontend:latest
+          envFrom:
+            - configMapRef:
+                name: webapp-config
+          ports:
+            - containerPort: 8000
+              name: gunicorn
+          volumeMounts:
+            - name: staticfiles
+              mountPath: /var/www/api/
+
+        - name: nginx-sidecar
+          image: nginx:stable
+          imagePullPolicy: Always
+          securityContext:
+            privileged: false
+            # Nginx must start as root to bind the proper port in the container.
+            allowPrivilegeEscalation: true
+            runAsNonRoot: false
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
+            - name: staticfiles
+              mountPath: /var/www/api/
+              # The API must be able to copy the files to the volume.
+              readOnly: false
+
+      # https://www.meanpug.com/django-on-kubernetes-as-concisely-as-possible/
+      initContainers:
+        - name: init-migrate
+          image: ghcr.io/autoreduction/autoreduce-frontend:latest
+          command: ["autoreduce-webapp-manage", "migrate"]
+
+        - name: init-collectstatic
+          image: ghcr.io/autoreduction/autoreduce-frontend:latest
+          env:
+            - name: AUTOREDUCTION_PRODUCTION
+              value: "True"
+          command: ["autoreduce-webapp-manage", "collectstatic", "--noinput"]
+          volumeMounts:
+            - name: staticfiles
+              mountPath: /var/www/api/
+
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: backend-api-nginx
+        - name: staticfiles
+          emptyDir: {}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kubernetes-django-service
+spec:
+  selector:
+    app: frontend
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+  type: NodePort
