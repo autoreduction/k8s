@@ -3,19 +3,19 @@ kind: Deployment
 metadata:
   name: autoreduce-frontend
   labels:
-    app: frontend
+    app: autoreduce-frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: autoreduce-frontend
   template:
     metadata:
       labels:
-        app: frontend
+        app: autoreduce-frontend
     spec:
       containers:
-        - name: frontend
+        - name: autoreduce-frontend
           image: ghcr.io/autoreduction/autoreduce-frontend:latest
           envFrom:
             - configMapRef:
@@ -71,15 +71,16 @@ spec:
         - name: staticfiles
           emptyDir: {}
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: kubernetes-django-service
+  name: autoreduce-frontend
+  namespace: kafka
 spec:
-  selector:
-    app: frontend
   ports:
-  - protocol: TCP
-    port: 8000
-    targetPort: 8000
+    - port: 8000
+      protocol: TCP
+      targetPort: 8000
+  selector:
+    app: autoreduce-frontend
   type: NodePort
