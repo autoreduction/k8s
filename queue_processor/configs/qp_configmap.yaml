@@ -26,5 +26,5 @@ data:
   SFTP_PASSWORD: "admin"
   SFTP_HOST: "127.0.1.1"
   SFTP_PORT: "22"
-  KAFKA_BROKER_URL: "my-cluster-kafka-bootstrap:9092"
+  KAFKA_BROKER_URL: "my-cluster-kafka-bootstrap.kafka:9092"
   KAFKA_TOPIC: "data_ready"
