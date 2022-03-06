@@ -75,7 +75,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: autoreduce-frontend
-  namespace: kafka
+  namespace: autoreduce
 spec:
   ports:
     - port: 8000
