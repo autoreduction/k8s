@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-migrations
+spec:
+  template:
+    spec:
+      containers:
+        - name: autoreduce-frontend
+          image: ghcr.io/autoreduction/autoreduce-frontend:latest
+          command: ["autoreduce-webapp-manage", "migrate"]
+          envFrom:
+            - configMapRef:
+                name: webapp-config
+      restartPolicy: Never
+  backoffLimit: 5

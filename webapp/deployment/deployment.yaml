@@ -50,10 +50,6 @@ spec:
 
       # https://www.meanpug.com/django-on-kubernetes-as-concisely-as-possible/
       initContainers:
-        - name: init-migrate
-          image: ghcr.io/autoreduction/autoreduce-frontend:latest
-          command: ["autoreduce-webapp-manage", "migrate"]
-
         - name: init-collectstatic
           image: ghcr.io/autoreduction/autoreduce-frontend:latest
           env:
