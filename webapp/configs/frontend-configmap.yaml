@@ -9,7 +9,7 @@ data:
   DATABASE_NAME: "autoreduction"
   DATABASE_USERNAME: "root"
   DATABASE_PASSWORD: "password"
-  DATABASE_HOST: "172.17.0.5"
+  DATABASE_HOST: "mysql"
   DATABASE_PORT: "3306"
   ICAT_AUTH: "simple"
   ICAT_HOST: "YOUR-ICAT-WSDL-URL"
