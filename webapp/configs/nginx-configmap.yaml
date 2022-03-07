@@ -9,43 +9,25 @@ data:
         }
 
         server {
-            listen 80;
-            root /var/www/api/;
+            listen 80 default_server;
+            listen [::]:80 default_server;
+            server_name localhost;
+            root /var/www/api;
             client_max_body_size 1G;
 
             access_log stdout;
             error_log  stderr;
 
+            location /static/ {
+                alias /var/www/api/;
+                autoindex off;
+            }
+
             location / {
-                location /static {
-                    add_header Access-Control-Allow-Origin *;
-                    add_header Access-Control-Max-Age 3600;
-                    add_header Access-Control-Expose-Headers Content-Length;
-                    add_header Access-Control-Allow-Headers Range;
-
-                    if ($request_method = OPTIONS) {
-                        return 204;
-                    }
-
-                    try_files /$uri @django;
-                }
-
-                location /nghealth {
-                return 200;
-                }
-
                 try_files $uri @django;
             }
 
             location @django {
-                proxy_connect_timeout 30;
-                proxy_send_timeout 30;
-                proxy_read_timeout 30;
-                send_timeout 30;
-                # We have another proxy in front of this one. It will capture traffic
-                # as HTTPS, so we must not set X-Forwarded-Proto here since it's already
-                # set with the proper value.
-                # proxy_set_header X-Forwarded-Proto $schema;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                 proxy_set_header Host $http_host;
                 proxy_redirect off;

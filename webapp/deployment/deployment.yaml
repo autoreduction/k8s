@@ -74,13 +74,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: autoreduce-frontend
+  name: frontend-service
   namespace: autoreduce
 spec:
-  ports:
-    - port: 8000
-      protocol: TCP
-      targetPort: 8000
   selector:
     app: autoreduce-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 32001
   type: NodePort
