@@ -30,11 +30,12 @@ spec:
         - name: nginx-sidecar
           image: nginx:stable
           imagePullPolicy: Always
-          securityContext:
-            privileged: false
-            # Nginx must start as root to bind the proper port in the container.
-            allowPrivilegeEscalation: true
-            runAsNonRoot: false
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
           ports:
             - name: http
               containerPort: 80
@@ -45,10 +46,7 @@ spec:
               readOnly: true
             - name: staticfiles
               mountPath: /var/www/api/
-              # The API must be able to copy the files to the volume.
-              readOnly: false
 
-      # https://www.meanpug.com/django-on-kubernetes-as-concisely-as-possible/
       initContainers:
         - name: init-collectstatic
           image: ghcr.io/autoreduction/autoreduce-frontend:latest
@@ -71,13 +69,25 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend-service
-  namespace: autoreduce
 spec:
   selector:
     app: autoreduce-frontend
   ports:
-    - protocol: TCP
+    - name: http
       port: 80
-      targetPort: 80
-      nodePort: 32001
-  type: NodePort
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: frontend-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: frontend-service
+          port: 80
