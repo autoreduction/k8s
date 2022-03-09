@@ -3,6 +3,7 @@ kind: Job
 metadata:
   name: django-migrations
 spec:
+  ttlSecondsAfterFinished: 0
   template:
     spec:
       containers:
