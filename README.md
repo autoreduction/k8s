@@ -3,8 +3,8 @@ Scripts for deploying parts of the Autoreduce service
 
 # Architecture
 Namespaces:
-    - webapp (MYSQL, frontend)
-    - monitoring (elastic, prometheus + grafana)
-    - traefik (traefik)
-    - kafka (strimzi kafka)
-    - cert-manager (cert-manager)
+- webapp (MYSQL, frontend)
+- monitoring (Elastic, Prometheus + Grafana)
+- traefik (Traefik)
+- kafka (Strimzi)
+- cert-manager (cert-manager)
