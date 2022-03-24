@@ -4,7 +4,7 @@ metadata:
   name: webapp-config
 data:
   AUTOREDUCTION_PRODUCTION: "1"
-  DJANGO_ALLOWED_HOSTS: "192.168.49.2 localhost 0.0.0.0"
+  DJANGO_ALLOWED_HOSTS: "*" # Should be changed to actual allowed hosts once provisioned
   DJANGO_SECRET_KEY: "YOUR-SECRET-KEY"
   DATABASE_NAME: "autoreduction"
   DATABASE_USERNAME: "root"
