@@ -1,15 +1,27 @@
-## Make sure Helm is installed
-https://helm.sh/docs/intro/
+# Autoreduce Webapp Deployment
+This repo contains the scripts needed to deploy the frontend of autoreduce.
 
 ## Traefik
+Trafik IngressRoutes are used as a reverse proxy for the webapp.
+For these to work, Traefik must be installed.
+```
+kubectl create ns traefik
 helm repo add traefik https://helm.traefik.io/traefik
 helm repo update
-helm install traefik traefik/traefik -n kube-system -f ./traefik-values.yaml
+helm install traefik traefik/traefik -n traefik
+```
 
 ## Run deployment
+To create the deployment of the frontend, run:
 ```bash
 kubectl apply -f deployment.yaml
 ```
+
+To then migrate the database, run the django-migrate job:
+```bash
+kubectl apply -f django-migrate-job.yaml
+```
+The job will delete itself once it has finished successfully.
 
 ## Prometheus
 https://traefik.io/blog/capture-traefik-metrics-for-apps-on-kubernetes-with-prometheus/
