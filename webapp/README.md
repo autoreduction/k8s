@@ -1,8 +1,11 @@
 # Autoreduce Webapp Deployment
 This repo contains the scripts needed to deploy the frontend of autoreduce.
 
+Traefik ingress to reverse proxy to port 80 of the pod
+Nginx sidecar listening infront of Gunicorn on port 80 to serve static content.
+
 ## Traefik
-Trafik IngressRoutes are used as a reverse proxy for the webapp.
+Traefik IngressRoutes are used as a reverse proxy for the webapp.
 For these to work, Traefik must be installed.
 ```
 kubectl create ns traefik
@@ -22,6 +25,14 @@ To then migrate the database, run the django-migrate job:
 kubectl apply -f django-migrate-job.yaml
 ```
 The job will delete itself once it has finished successfully.
+
+## Cert Manager
+```
+kubectl create ns cert-manager
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+helm upgrade --install cert-manager --namespace cert-manager --version v1.7.2 jetstack/cert-manager --set installCRDs=true
+```
 
 ## Prometheus
 https://traefik.io/blog/capture-traefik-metrics-for-apps-on-kubernetes-with-prometheus/
