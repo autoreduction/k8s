@@ -1,4 +1,4 @@
-# autoreduce-k8s
+# Kubernetes Deployments
 
 Scripts for deploying parts of the Autoreduce service
 
