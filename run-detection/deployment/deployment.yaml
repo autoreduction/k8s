@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autoreduce-run-detection
+  labels:
+    app: autoreduce-run-detection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: autoreduce-run-detection
+  template:
+    metadata:
+      labels:
+        app: autoreduce-run-detection
+    spec:
+      containers:
+        - name: autoreduce-run-detection
+          image: ghcr.io/autoreduction/autoreduce-run-detection:latest
+          envFrom:
+            - configMapRef:
+                name: run-detection-config
+          imagePullPolicy: IfNotPresent
