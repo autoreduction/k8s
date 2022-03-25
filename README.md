@@ -1,8 +1,11 @@
 # autoreduce-k8s
+
 Scripts for deploying parts of the Autoreduce service
 
-# Architecture
+## Architecture
+
 Namespaces:
+
 - webapp (MYSQL, frontend)
 - monitoring (Elastic, Prometheus + Grafana)
 - traefik (Traefik)
