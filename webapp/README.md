@@ -17,18 +17,31 @@ helm repo update
 helm install traefik traefik/traefik
 ```
 
-## Run deployment
+## Setting Environmental Variables
+
+Firstly, update the values in webapp-secrets to match the credentials for your setup.
+Then apply this as a Kubernetes Secret.
+```bash
+kubectl create secret generic webapp-secret --from-env-file=webapp-secrets
+```
+
+Then apply the webapp-configmap:
+```bash
+kubectl apply -f webapp-configmap.yaml -n webapp
+```
+
+## Creating Deployment
 
 To create the deployment of the frontend, run:
 
 ```bash
-kubectl apply -f deployment.yaml
+kubectl apply -f deployment.yaml -n webapp
 ```
 
 To then migrate the database, run the django-migrate job:
 
 ```bash
-kubectl apply -f django-migrate-job.yaml
+kubectl apply -f django-migrate-job.yaml -n webapp
 ```
 
 The job will delete itself once it has finished successfully.

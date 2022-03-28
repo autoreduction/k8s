@@ -18,6 +18,8 @@ spec:
         - name: autoreduce-frontend
           image: ghcr.io/autoreduction/autoreduce-frontend:latest
           envFrom:
+            - secretRef:
+                name: webapp-secret
             - configMapRef:
                 name: webapp-config
           ports:
