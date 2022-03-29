@@ -6,8 +6,10 @@ Scripts for deploying parts of the Autoreduce service
 
 Namespaces:
 
-- webapp (MYSQL, frontend)
-- monitoring (Elastic, Prometheus + Grafana)
 - kube-system (Traefik)
 - kafka (Strimzi)
-- cert-manager (cert-manager)
+- webapp (MYSQL, frontend)
+- api (REST API)
+- queue-processor (queue processor)
+- run-detection (Run Detection)
+- monitoring (Elastic, Prometheus + Grafana)
