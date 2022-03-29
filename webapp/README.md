@@ -32,19 +32,20 @@ kubectl apply -f webapp-configmap.yaml -n webapp
 
 ## Creating Deployment
 
-To create the deployment of the frontend, run:
-
-```bash
-kubectl apply -f deployment.yaml -n webapp
-```
-
-To then migrate the database, run the django-migrate job:
+Firstly, you need to run the migrations on the database.
+This is done by running the django-migrate job:
 
 ```bash
 kubectl apply -f django-migrate-job.yaml -n webapp
 ```
 
 The job will delete itself once it has finished successfully.
+
+To then create the deployment of the frontend, run:
+
+```bash
+kubectl apply -f deployment.yaml -n webapp
+```
 
 ## Cert Manager
 

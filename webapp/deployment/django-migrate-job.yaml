@@ -11,6 +11,8 @@ spec:
           image: ghcr.io/autoreduction/autoreduce-frontend:latest
           command: ["autoreduce-webapp-manage", "migrate"]
           envFrom:
+            - secretRef:
+                name: webapp-secret
             - configMapRef:
                 name: webapp-config
       restartPolicy: Never
