@@ -1,0 +1,9 @@
+apiVersion: v2
+description: A Helm chart for Kubernetes deployments of Autoreduce Frontend
+name: webapp-parent
+version: 0.0.1
+
+# name must match name in child chart's Chart.yaml
+dependencies:
+  # webapp doesn't have a condition so it always deploys
+  - name: webapp

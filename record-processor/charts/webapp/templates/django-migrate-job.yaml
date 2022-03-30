@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.job.name }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
+  template:
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.container.image.repository }}:{{ .Values.container.image.tag }}"
+          command: ["autoreduce-webapp-manage", "migrate"]
+          envFrom:
+          - configMapRef:
+              name: "{{ .Chart.Name }}-config"
+          - secretRef:
+              name: "{{ .Chart.Name }}-secret"
+      restartPolicy: Never
+  backoffLimit: 5

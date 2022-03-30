@@ -1,0 +1,28 @@
+container:
+  image:
+    repository: ghcr.io/autoreduction/autoreduce-frontend
+    tag: latest
+    pullPolicy: IfNotPresent
+  port: 8000
+
+sidecar:
+  nginx:
+    probe:
+      initialDelaySeconds: 3
+      periodSeconds: 3
+      path: /
+
+service:
+  port: 80
+
+ingressroute:
+  name: frontend-ingress
+  routes:
+    match: PathPrefix(`/`)
+
+initContainer:
+  name: init-collectstatic
+
+job:
+  name: django-migrations
+  ttlSecondsAfterFinished: 0
