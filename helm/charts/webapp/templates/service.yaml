@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.service.name }}
+  name: {{ include "frontend.fullname" . }}
   labels:
-    app: {{ .Values.service.name }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    {{- include "frontend.labels" . | nindent 4 }}
 spec:
-  selector:
-    app: autoreduce-frontend
   ports:
     - name: http
       port: {{ .Values.service.port }}
+  selector:
+    {{- include "frontend.selectorLabels" . | nindent 4 }}

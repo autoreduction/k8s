@@ -5,7 +5,6 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-1"
-    "helm.sh/hook-delete-policy": hook-succeeded
 data:
   AUTOREDUCTION_PRODUCTION: "1"
   DJANGO_ALLOWED_HOSTS: "*" # Should be changed to actual allowed hosts once provisioned

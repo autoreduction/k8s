@@ -1,66 +1,99 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chart.fullname" . }}
+  name: {{ include "frontend.fullname" . }}
   labels:
-{{ include "chart.labels" . | indent 4 }}
+    {{- include "frontend.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "chart.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- include "frontend.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
-        app.kubernetes.io/name: {{ include "chart.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- include "frontend.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "frontend.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.container.image.repository }}:{{ .Values.container.image.tag }}"
-          imagePullPolicy: {{ .Values.container.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
-          - configMapRef:
-              name: "{{ .Chart.Name }}-config"
-          - secretRef:
-              name: "{{ .Chart.Name }}-secret"
+            - secretRef:
+                name: webapp-secret
+            - configMapRef:
+                name: webapp-config
           ports:
-            - name: http
-              containerPort: {{ .Values.container.port }}
+            - name: gunicorn
+              containerPort: 8000
               protocol: TCP
           volumeMounts:
             - name: staticfiles
               mountPath: /var/www/api/
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
         - name: nginx-sidecar
           image: nginx:stable
           imagePullPolicy: Always
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 80
               protocol: TCP
           volumeMounts:
             - name: nginx-conf
               mountPath: /etc/nginx/conf.d
-              readOnly: true
             - name: staticfiles
               mountPath: /var/www/api/
-              readOnly: true
           livenessProbe:
             httpGet:
               path: {{ .Values.sidecar.nginx.probe.path }}
               port: {{ .Values.service.port }}
             initialDelaySeconds: {{ .Values.sidecar.nginx.probe.initialDelaySeconds }}
             periodSeconds: {{ .Values.sidecar.nginx.probe.periodSeconds }}
+
       initContainers:
-        - name: {{ .Values.initContainer.name }}
-          image: "{{  .Values.container.image.repository }}:{{ .Values.container.image.tag }}"
-          imagePullPolicy: {{ .Values.container.image.pullPolicy }}
-          envFrom:
-            - configMapRef:
-                name: "{{ .Chart.Name }}-config"
+        - name: init-collectstatic
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+            - name: AUTOREDUCTION_PRODUCTION
+              value: "True"
+          command: ["autoreduce-webapp-manage", "collectstatic", "--noinput"]
+          volumeMounts:
+            - name: staticfiles
+              mountPath: /var/www/api/
+
       volumes:
         - name: nginx-conf
           configMap:
             name: backend-api-nginx
         - name: staticfiles
           emptyDir: {}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -5,19 +5,18 @@ metadata:
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "0"
-    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
   template:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.container.image.repository }}:{{ .Values.container.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ["autoreduce-webapp-manage", "migrate"]
           envFrom:
           - configMapRef:
-              name: "{{ .Chart.Name }}-config"
+              name: "webapp-config"
           - secretRef:
-              name: "{{ .Chart.Name }}-secret"
+              name: "webapp-secret"
       restartPolicy: Never
   backoffLimit: 5
