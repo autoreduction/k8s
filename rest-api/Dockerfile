@@ -2,10 +2,6 @@
 # Always use the -slim images if you can: they are the best compromise between performance and image size.
 FROM python:3.8.12-slim
 
-# Set production env to ensure DEBUG+False for Django
-# This sets STATIC_ROOT to /staticfiles
-ENV AUTOREDUCTION_PRODUCTION 1
-
 # This is to print directly to stdout instead of buffering output
 ENV PYTHONUNBUFFERED 1
 
@@ -31,4 +27,4 @@ ADD ./setup.py /autoreduce-rest-api/setup.py
 RUN python3 -m pip install --no-cache-dir gunicorn autoreduce-rest-api==22.0.0.dev19
 
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8001", "--workers", "4", "autoreduce_rest_api.autoreduce_django.wsgi"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "autoreduce_rest_api.autoreduce_django.wsgi"]

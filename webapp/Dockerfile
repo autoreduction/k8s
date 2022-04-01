@@ -2,10 +2,6 @@
 # Always use the -slim images if you can: they are the best compromise between performance and image size.
 FROM python:3.8.12-slim
 
-# Set production env to ensure DEBUG+False for Django
-# This sets STATIC_ROOT to /staticfiles
-ENV AUTOREDUCTION_PRODUCTION 1
-
 # This is to print directly to stdout instead of buffering output
 ENV PYTHONUNBUFFERED 1
 
@@ -24,16 +20,15 @@ ENV PATH=/home/isisautoreduce/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbi
 
 # Note: mysqlclient is required when connecting to the production DB
 RUN python3 -m pip install --user --no-cache-dir mysqlclient debugpy
-RUN python3 -m pip install --user --no-cache-dir gunicorn autoreduce-frontend==22.0.0.dev17
+RUN python3 -m pip install --user --no-cache-dir gunicorn autoreduce-frontend==22.0.0.dev20
+
+# Add fixtures to the project for dev/debugging
+ADD --chown=isisautoreduce:isisautoreduce autoreduce_frontend/autoreduce_webapp/fixtures/ fixtures/ 
 
 USER root
-RUN mkdir -p /staticfiles
 RUN mkdir -p /var/www/api/
-RUN chown isisautoreduce:isisautoreduce /staticfiles
 RUN chown isisautoreduce:isisautoreduce /var/www/api/
 USER isisautoreduce
-RUN ["autoreduce-webapp-manage", "collectstatic", "--no-input"]
-RUN cp -R /staticfiles /var/www/api/
 
 EXPOSE 8000
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]

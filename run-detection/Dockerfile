@@ -2,10 +2,6 @@
 # Always use the -slim images if you can: they are the best compromise between performance and image size.
 FROM python:3.8.12-slim
 
-# Set production env to ensure DEBUG+False for Django
-# This sets STATIC_ROOT to /staticfiles
-ENV AUTOREDUCTION_PRODUCTION 1
-
 # This is to print directly to stdout instead of buffering output
 ENV PYTHONUNBUFFERED 1
 

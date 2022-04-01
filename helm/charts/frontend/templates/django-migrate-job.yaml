@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.job.name }}
+  annotations:
+    "helm.sh/hook": post-install
+spec:
+  ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
+  template:
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: ["autoreduce-webapp-manage", "migrate"]
+          envFrom:
+          - configMapRef:
+              name: "webapp-config"
+          - secretRef:
+              name: "webapp-secret"
+      restartPolicy: Never
+  backoffLimit: 5

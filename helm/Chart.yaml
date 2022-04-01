@@ -1,0 +1,10 @@
+apiVersion: v2
+description: A Helm chart for Kubernetes deployments of Autoreduce Frontend
+name: frontend-parent
+version: 0.0.1
+
+# name must match name in child chart's Chart.yaml
+dependencies:
+  # Deploy mysql first so that the frontend can connect to it
+  - name: mysql
+  - name: frontend
