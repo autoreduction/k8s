@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "rest-api.fullname" . }}
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: {{ .Values.ingressroute.routes.match }}
+      kind: Rule
+      services:
+        - name: rest-api
+          port: {{ .Values.service.port }}
