@@ -1,0 +1,21 @@
+{{- if .Values.cronjob.create -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "run-detection.fullname" . }}
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ .Chart.Name }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - autoreduce-run-detection >> ~/job-output.log
+          restartPolicy: OnFailure
+{{- end }}
