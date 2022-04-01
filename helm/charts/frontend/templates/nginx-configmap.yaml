@@ -23,15 +23,11 @@ data:
 
         location /static/ {
             alias /var/www/api/;
-            autoindex off;
+            autoindex on;
         }
 
         location / {
             try_files $uri @django;
-        }
-
-        location /api/ {
-            proxy_pass http://app_server/api/;
         }
 
         location @django {
