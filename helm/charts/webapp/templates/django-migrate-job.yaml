@@ -3,8 +3,7 @@ kind: Job
 metadata:
   name: {{ .Values.job.name }}
   annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "0"
+    "helm.sh/hook": post-install
 spec:
   ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
   template:

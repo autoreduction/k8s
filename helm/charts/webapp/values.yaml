@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/autoreduction/autoreduce-frontend
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: latest
+  tag: 2022-04-01T0115
 
 imagePullSecrets: []
 nameOverride: ""
@@ -16,7 +16,7 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -59,7 +59,7 @@ initContainer:
 
 job:
   name: django-migrations
-  ttlSecondsAfterFinished: 0
+  ttlSecondsAfterFinished: 100
 
 resources:
   {}

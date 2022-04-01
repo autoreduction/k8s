@@ -60,12 +60,6 @@ spec:
               mountPath: /etc/nginx/conf.d
             - name: staticfiles
               mountPath: /var/www/api/
-          livenessProbe:
-            httpGet:
-              path: {{ .Values.sidecar.nginx.probe.path }}
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: {{ .Values.sidecar.nginx.probe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.sidecar.nginx.probe.periodSeconds }}
 
       initContainers:
         - name: init-collectstatic
