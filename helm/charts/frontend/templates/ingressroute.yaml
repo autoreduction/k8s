@@ -10,6 +10,17 @@ spec:
   routes:
     - match: {{ .Values.ingressroute.routes.match }}
       kind: Rule
+      middlewares:
+        - name: frontend-linkerd-middleware
       services:
         - name: {{ .Values.service.name }}
           port: {{ .Values.service.port }}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: frontend-linkerd-middleware
+spec:
+  headers:
+    customRequestHeaders:
+      l5d-dst-override: "frontend.webapp.svc.cluster.local:80"
