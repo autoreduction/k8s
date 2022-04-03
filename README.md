@@ -8,8 +8,14 @@ Namespaces:
 
 - kube-system (Traefik)
 - kafka (Strimzi)
-- webapp (MYSQL, frontend)
-- api (REST API)
+- webapp (MYSQL, frontend, REST API)
 - queue-processor (queue processor)
 - run-detection (Run Detection)
 - monitoring (Elastic, Prometheus + Grafana)
+
+Additional services:
+
+- Traefik
+- Strimzi
+- Longhorn (for storing persistent data)
+- Linkerd (Serivce Mesh)
