@@ -2,7 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Number of replicas
 replicaCount: 1
+
+environment:
+  # Specifies if AUTOREDUCTION_PRODUCTION environment variable is set to true
+  production: true
 
 image:
   repository: ghcr.io/autoreduction/autoreduce-frontend
