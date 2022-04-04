@@ -36,8 +36,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: run-detection-config
+          volumeMounts:
+          - name: run-detection-vol
+            # TODO: Correct this path
+            mountPath: /data
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+
+      volumes:
+        - name: run-detection-vol
+          persistentVolumeClaim:
+            claimName: run-detection-pvc
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
