@@ -10,6 +10,9 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: 2022-03-04T0216
 
+storage:
+  size: "15Gi"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
