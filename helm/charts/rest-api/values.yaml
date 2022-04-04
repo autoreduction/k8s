@@ -4,6 +4,10 @@
 
 replicaCount: 1
 
+environment:
+  # Specifies if AUTOREDUCTION_PRODUCTION environment variable is set to true
+  production: true
+
 image:
   repository: ghcr.io/autoreduction/autoreduce-rest-api
   pullPolicy: IfNotPresent
