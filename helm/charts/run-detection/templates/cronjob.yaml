@@ -2,7 +2,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "run-detection.fullname" . }}
+  name: {{ include "run-detection.fullname" . }}-cron
+  labels:
+    {{- include "run-detection.labels" . | nindent 4 }}
 spec:
   schedule: "* * * * *"
   jobTemplate:
@@ -10,7 +12,7 @@ spec:
       template:
         spec:
           containers:
-          - name: {{ .Chart.Name }}
+          - name: run-detect-cron
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: IfNotPresent
             command:
