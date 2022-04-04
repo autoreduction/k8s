@@ -61,8 +61,7 @@ ingressroute:
     match: PathPrefix(`/`)
 
 job:
-  name: django-migrations
-  ttlSecondsAfterFinished: 100
+  ttlSecondsAfterFinished: 20
 
 resources:
   {}
