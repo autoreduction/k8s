@@ -3,7 +3,7 @@ kind: KafkaTopic
 metadata:
   name: data-ready
   labels:
-    strimzi.io/cluster: my-cluster
+    strimzi.io/cluster: autoreduce-cluster
 spec:
   topicName: data_ready
   partitions: 1

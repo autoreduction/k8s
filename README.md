@@ -6,7 +6,7 @@ Scripts for deploying parts of the Autoreduce service
 
 Namespaces:
 
-- kube-system (Traefik)
+- traefik (Traefik)
 - kafka (Strimzi)
 - webapp (MYSQL, frontend, REST API)
 - queue-processor (queue processor)
@@ -15,7 +15,5 @@ Namespaces:
 
 Additional services:
 
-- Traefik
-- Strimzi
 - Longhorn (for storing persistent data)
 - Linkerd (Serivce Mesh)
