@@ -10,7 +10,7 @@ data:
   AUTOREDUCTION_PRODUCTION: "1"
   {{- end }}
   DJANGO_ALLOWED_HOSTS: "*" # Should be changed to actual allowed hosts once provisioned
-  KAFKA_BROKER_URL: "my-cluster-kafka-bootstrap.kafka:9092"
+  KAFKA_BROKER_URL: "autoreduce-cluster-kafka-bootstrap.kafka:9092"
   KAFKA_TOPIC: "data_ready"
   DATABASE_NAME: autoreduction
   DATABASE_USERNAME: "root"
