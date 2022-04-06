@@ -9,17 +9,7 @@
 - name: Create archive credentials Secret
   kubernetes.core.k8s:
     state: present
-    definition:
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: cifs-csi-credentials
-        namespace: queue-processor
-      data:
-        username: { { vault_archive_username | b64encode } }
-        password: { { vault_archive_password | b64encode } }
-        domain: { { vault_archive_domain | b64encode } }
+    definition: "{{ lookup('template', 'templates/cifs-credentials.yaml.j2') | from_yaml }}"
 
 - name: Ensure Helm repository is available
   kubernetes.core.helm_repository:
