@@ -1,0 +1,3 @@
+---
+# Should AUTOREDUCTION_PRODUCTION env var be set
+production_var: True

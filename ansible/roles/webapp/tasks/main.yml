@@ -1,0 +1,46 @@
+---
+# tasks file for webapp
+- name: Create a ConfigMap for nginx from template definition
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'templates/nginx-configmap.yml.j2') | from_yaml }}"
+
+- name: Create a ConfigMap for webapp from template definition
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'templates/webapp-configmap.yml.j2') | from_yaml }}"
+
+- name: Create webapp secret for environmental variables
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      type: Opaque
+      metadata:
+        name: "webapp-secret"
+        namespace: "webapp"
+      data:
+        DJANGO_SECRET_KEY: "{{ webapp_secret_key | b64encode }}"
+        DATABASE_NAME: "autoreduction"
+        DATABASE_USERNAME: "{{ vault_db_username | b64encode }}"
+        DATABASE_PASSWORD: "{{ vault_mysql_user_password | b64encode }}"
+        DATABASE_HOST: "{{ vault_db_host | b64encode }}"
+        ICAT_AUTH: "simple"
+        ICAT_HOST: "{{ vault_icat_host | b64encode }}"
+        ICAT_USER: "{{ vault_icat_username | b64encode }}"
+        ICAT_PASSWORD: "{{ vault_icat_password | b64encode }}"
+        SFTP_USERNAME: "{{ vault_sftp_username | b64encode }}"
+        SFTP_PASSWORD: "{{ vault_sftp_password | b64encode }}"
+        SFTP_HOST: "{{ vault_sftp_host | b64encode }}"
+        SFTP_PORT: "{{ vault_sftp_port | b64encode }}"
+
+- name: Deploy Helm chart for frontend with values in template
+  kubernetes.core.helm:
+    name: frontend
+    chart_ref: ../helm/charts/frontend
+    release_namespace: webapp
+    create_namespace: true
+    values:
+      environment:
+        production: "{{ production_var }}"
