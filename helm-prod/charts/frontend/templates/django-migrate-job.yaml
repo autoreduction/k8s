@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "frontend.fullname" . }}-migrate
+  labels:
+    {{- include "frontend.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
+  template:
+    spec:
+      containers:
+        - name: django-migrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: ["autoreduce-webapp-manage", "migrate", "--noinput"]
+          envFrom:
+          - configMapRef:
+              name: "webapp-config"
+          - secretRef:
+              name: "webapp-secret"
+      restartPolicy: Never
+  backoffLimit: 5

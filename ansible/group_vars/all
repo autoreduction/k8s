@@ -1,3 +1,8 @@
 ---
 # Should AUTOREDUCTION_PRODUCTION env var be set
 production_var: True
+
+# Which version of the webapp (frontend) to deploy
+frontend_tag: "2022-04-06T0331"
+# Which version of the rest-api to deploy
+rest-api_tag: "2022-04-06T0406"

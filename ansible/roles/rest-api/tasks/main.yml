@@ -1,0 +1,12 @@
+---
+- name: Deploy Helm chart for rest-api
+  kubernetes.core.helm:
+    name: rest-api
+    chart_ref: ../helm/charts/rest-api
+    release_namespace: webapp
+    create_namespace: true
+    values:
+      environment:
+        production: "{{ production_var }}"
+      image:
+        tag: "{{ rest-api_version }}"

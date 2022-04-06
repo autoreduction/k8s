@@ -3,21 +3,11 @@
 - name: Create mysql configmap to create database
   kubernetes.core.k8s:
     state: present
-    definition:
-      apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: mysql-initdb-config
-        namespace: "webapp"
-      data:
-        initdb.sql: |
-          USE autoreduction;
-          CREATE USER 'autoreduce'@'%' IDENTIFIED BY '{{ vault_mysql_user_password }}';
-          GRANT ALL PRIVILEGES ON autoreduction.* TO 'autoreduce'@'%';
+    definition: "{{ lookup('template', 'templates/mysql-initdb.yaml.j2') | from_yaml }}"
 
 - name: Deploy Helm chart for MySQL with values in template
   kubernetes.core.helm:
-    name: frontend
+    name: mysql
     chart_ref: ../helm/charts/mysql
     release_namespace: webapp
     create_namespace: true

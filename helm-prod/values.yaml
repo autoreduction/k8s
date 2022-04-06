@@ -1,0 +1,9 @@
+# everything under global can be accessed in child templates
+# also, these variables are the only way to pass values via pipeline
+
+# only global.* values can be passed down to child templates
+# so this is how you set properties that they all should have
+
+global:
+  monitoring:
+    name: k8s-prometheus
