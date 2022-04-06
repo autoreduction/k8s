@@ -10,3 +10,8 @@ data:
   AUTOREDUCTION_PRODUCTION: "1"
   {{- end }}
   DJANGO_ALLOWED_HOSTS: "*" # Should be changed to actual allowed hosts once provisioned
+  DATABASE_NAME: autoreduction
+  DATABASE_USERNAME: "root"
+  DATABASE_PASSWORD: "password"
+  DATABASE_HOST: "mysql"
+  DATABASE_PORT: "3306"

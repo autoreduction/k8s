@@ -12,6 +12,7 @@ data:
   DJANGO_ALLOWED_HOSTS: "*" # Should be changed to actual allowed hosts once provisioned
   KAFKA_BROKER_URL: "autoreduce-cluster-kafka-bootstrap.kafka:9092"
   KAFKA_TOPIC: "data_ready"
+  AUTOREDUCE_API_URL: "http://rest-api.webapp.svc.cluster.local:8001/api"
   DATABASE_NAME: autoreduction
   DATABASE_USERNAME: "root"
   DATABASE_PASSWORD: "password"
