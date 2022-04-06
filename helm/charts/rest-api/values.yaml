@@ -12,7 +12,7 @@ image:
   repository: ghcr.io/autoreduction/autoreduce-rest-api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2022-04-01T1141
+  tag: 2022-04-06T0406
 
 imagePullSecrets: []
 nameOverride: ""
@@ -20,7 +20,7 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: false
+  create: true
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -45,7 +45,7 @@ securityContext:
 
 service:
   type: ClusterIP
-  port: 8000
+  port: 8001
 
 ingressroute:
   routes:
