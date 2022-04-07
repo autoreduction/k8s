@@ -1,0 +1,28 @@
+---
+- name: Create Kafka namespace
+  kubernetes.core.k8s:
+    name: "{{ strimzi_kafka_namespace }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Ensure Helm repository is available
+  kubernetes.core.helm_repository:
+    name: strimzi
+    repo_url: https://strimzi.io/charts/
+    state: present
+
+- name: Ensure Strimzi Operator is deployed
+  kubernetes.core.helm:
+    name: strimzi
+    namespace: "{{ strimzi_kafka_namespace }}"
+    create_namespace: true
+    chart_ref: strimzi/strimzi-kafka-operator
+    values:
+      watchAnyNamespace: true
+    state: present
+
+- name: Wait for Kafka Deployment
+  shell: "kubectl rollout status -n {{ strimzi_kafka_namespace }} deploy/{{ item }}"
+  with_items:
+    - strimzi-cluster-operator

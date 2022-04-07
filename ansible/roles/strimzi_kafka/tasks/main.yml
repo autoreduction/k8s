@@ -1,0 +1,7 @@
+---
+- name: Install Kafka Operator
+  import_tasks: install.yaml
+
+- name: Create Kafka Cluster
+  import_tasks: cluster.yaml
+  when: strimzi_kafka_create_cluster | bool
