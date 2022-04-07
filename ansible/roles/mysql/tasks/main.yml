@@ -16,6 +16,6 @@
     - name: Deploy Helm chart for MySQL with values in template
       kubernetes.core.helm:
         name: mysql
-        chart_ref: ../../../helm-prod/charts/frontend
+        chart_ref: ../../../helm-prod/charts/mysql
         release_namespace: webapp
         create_namespace: true
