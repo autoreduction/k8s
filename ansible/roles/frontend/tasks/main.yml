@@ -1,4 +1,11 @@
 ---
+- name: Create Webapp namespace
+  kubernetes.core.k8s:
+    name: "webapp"
+    api_version: v1
+    kind: Namespace
+    state: present
+
 - name: Create a ConfigMap for nginx from template definition
   kubernetes.core.k8s:
     state: present
