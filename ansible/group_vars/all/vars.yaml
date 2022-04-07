@@ -6,3 +6,6 @@ production_var: false
 frontend_tag: "2022-04-06T0331"
 # Which version of the rest-api to deploy
 rest-api_tag: "2022-04-06T0406"
+
+autoreduction_user: "isisautoreduce"
+cephfs_key: "{{ vault_cephfs_key }}"
