@@ -1,0 +1,28 @@
+---
+- name: Deployment
+  delegate_to: localhost
+  run_once: true
+  block:
+    - name: Create run-detection namespace
+      kubernetes.core.k8s:
+        name: "run-detection"
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: Create a ConfigMap for run-detection from template definition
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/run-detection-configmap.yaml.j2') | from_yaml }}"
+
+    - name: Deploy Helm chart for run-detection
+      kubernetes.core.helm:
+        name: frontend
+        chart_ref: ../../../helm-prod/charts/run-detection
+        release_namespace: run-detection
+        create_namespace: true
+        values:
+          environment:
+            production: "{{ production_var }}"
+          image:
+            tag: "{{ frontend_tag }}"
