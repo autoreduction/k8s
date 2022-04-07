@@ -1,4 +1,4 @@
 - hosts: k8s_controller
   become: true
   roles:
-    - frontend
+    - role: frontend
