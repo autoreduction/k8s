@@ -1,39 +1,43 @@
 ---
-- name: Create Webapp namespace
-  kubernetes.core.k8s:
-    name: "webapp"
-    api_version: v1
-    kind: Namespace
-    state: present
+- name: Deployment
+  delegate_to: localhost
+  run_once: true
+  block:
+    - name: Create Webapp namespace
+      kubernetes.core.k8s:
+        name: "webapp"
+        api_version: v1
+        kind: Namespace
+        state: present
 
-- name: Create a ConfigMap for nginx from template definition
-  kubernetes.core.k8s:
-    state: present
-    definition: "{{ lookup('template', 'templates/nginx-configmap.yaml.j2') | from_yaml }}"
+    - name: Create a ConfigMap for nginx from template definition
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/nginx-configmap.yaml.j2') | from_yaml }}"
 
-- name: Create a ConfigMap for webapp from template definition
-  kubernetes.core.k8s:
-    state: present
-    definition: "{{ lookup('template', 'templates/webapp-configmap.yaml.j2') | from_yaml }}"
+    - name: Create a ConfigMap for webapp from template definition
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/webapp-configmap.yaml.j2') | from_yaml }}"
 
-- name: Create webapp secret for environmental variables
-  kubernetes.core.k8s:
-    state: present
-    definition: "{{ lookup('template', 'templates/webapp-secret.yaml.j2') | from_yaml }}"
+    - name: Create webapp secret for environmental variables
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/webapp-secret.yaml.j2') | from_yaml }}"
 
-- name: Deploy Helm chart for frontend
-  kubernetes.core.helm:
-    name: frontend
-    chart_ref: ../helm/charts/frontend
-    release_namespace: webapp
-    create_namespace: true
-    values:
-      environment:
-        production: "{{ production_var }}"
-      image:
-        tag: "{{ frontend_version }}"
+    - name: Deploy Helm chart for frontend
+      kubernetes.core.helm:
+        name: frontend
+        chart_ref: ../../../helm-prod/charts/frontend
+        release_namespace: webapp
+        create_namespace: true
+        values:
+          environment:
+            production: "{{ production_var }}"
+          image:
+            tag: "{{ frontend_tag }}"
 
-- name: Run Django db migration job
-  kubernetes.core.k8s:
-    state: present
-    definition: "{{ lookup('template', 'templates/django-migrate.yaml.j2') | from_yaml }}"
+    - name: Run Django db migration job
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/django-migrate.yaml.j2') | from_yaml }}"
