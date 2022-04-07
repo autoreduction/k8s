@@ -5,6 +5,11 @@
     state: present
     definition: "{{ lookup('template', 'templates/mysql-initdb.yaml.j2') | from_yaml }}"
 
+- name: Create mysql secret for credentials
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'templates/mysql-secret.yaml.j2') | from_yaml }}"
+
 - name: Deploy Helm chart for MySQL with values in template
   kubernetes.core.helm:
     name: mysql
