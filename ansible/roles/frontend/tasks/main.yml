@@ -21,6 +21,11 @@
     state: present
     definition: "{{ lookup('template', 'templates/webapp-secret.yaml.j2') | from_yaml }}"
 
+- name: Ensure TLS secrets are present
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'templates/tls-secret.yaml.j2') | from_yaml }}"
+
 - name: Deploy Helm chart for frontend
   kubernetes.core.helm:
     name: frontend
