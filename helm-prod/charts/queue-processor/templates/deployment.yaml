@@ -41,16 +41,21 @@ spec:
               containerPort: 80
               protocol: TCP
           volumeMounts:
-            - name: qp-persistent-storage
+            - name: archive-mount
               mountPath: /isis
-            - name: qp-persistent-storage
+            - name: ceph-mount
               mountPath: /instrument
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-        - name: qp-persistent-storage
-          persistentVolumeClaim:
-            claimName: qp-pvc
+        - name: archive-mount
+          hostPath:
+            path: /isis
+            type: Directory
+        - name: ceph-mount
+          hostPath:
+            path: /instrument
+            type: Directory
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
