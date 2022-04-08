@@ -25,4 +25,4 @@
           environment:
             production: "{{ production_var }}"
           image:
-            tag: "{{ frontend_tag }}"
+            tag: "{{ run-detection_tag }}"

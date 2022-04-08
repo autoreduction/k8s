@@ -21,6 +21,8 @@ ENV PATH=/home/isisautoreduce/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbi
 # Note: mysqlclient is required when connecting to the production DB
 RUN python3 -m pip install --user --no-cache-dir mysqlclient debugpy
 
-RUN python3 -m pip install --user autoreduce_run_detection==22.0.0.dev7
+ADD autoreduce_run_detection/ ./src
+ADD setup.py .
+RUN pip install .
 
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
