@@ -1,36 +1,20 @@
----
 - name: Deployment
+  delegate_to: localhost
   run_once: true
   block:
-    - name: Ensure cifs-utils is installed
-      become: true
-      ansible.builtin.package:
-        name: cifs-utils
-        state: present
-
-    - name: Create archive credentials Secret
+    - name: Create qp namespace
       kubernetes.core.k8s:
-        state: present
-        definition: "{{ lookup('template', 'templates/cifs-credentials.yaml.j2') | from_yaml }}"
-
-    - name: Ensure Helm repository is available
-      kubernetes.core.helm_repository:
-        name: csi-driver-smb
-        repo_url: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+        name: "queue-processor"
+        api_version: v1
+        kind: Namespace
         state: present
 
-    - name: Ensure csi-driver-smb is deployed
-      kubernetes.core.helm:
-        update_repo_cache: true
-        name: csi-driver-smb
-        namespace: kube-system
-        create_namespace: true
-        chart_ref: csi-driver-smb/csi-driver-smb
-        state: present
-
-    - name: Deploy Helm chart for Queue Processor with values in template
+    - name: Deploy Helm chart for qp
       kubernetes.core.helm:
         name: queue-processor
-        chart_ref: ../helm/charts/queue-processor
+        chart_ref: ../../../helm-prod/charts/queue-processor
         release_namespace: queue-processor
         create_namespace: true
+        values:
+          image:
+            tag: "{{ qp_tag }}"
