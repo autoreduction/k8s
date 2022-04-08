@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qp-config
+  namespace: queue-processor
+data:
+  AUTOREDUCTION_PRODUCTION: "1"
+  DJANGO_ALLOWED_HOSTS: "*"
+  KAFKA_BROKER_URL: "autoreduce-cluster-kafka-bootstrap.kafka:9092"
+  KAFKA_TOPIC: "data_ready"
+  AUTOREDUCE_API_URL: "http://rest-api.webapp.svc.cluster.local:8001/api"

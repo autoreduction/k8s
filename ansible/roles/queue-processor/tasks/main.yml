@@ -9,6 +9,16 @@
         kind: Namespace
         state: present
 
+    - name: Create a ConfigMap for queue processor
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/qp-configmap.yaml.j2') | from_yaml }}"
+
+    - name: Create queue processor secret
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/qp-secret.yaml.j2') | from_yaml }}"
+
     - name: Deploy Helm chart for qp
       kubernetes.core.helm:
         name: queue-processor
