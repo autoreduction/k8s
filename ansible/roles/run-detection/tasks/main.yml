@@ -17,7 +17,7 @@
 
     - name: Deploy Helm chart for run-detection
       kubernetes.core.helm:
-        name: frontend
+        name: run-detection
         chart_ref: ../../../helm-prod/charts/run-detection
         release_namespace: run-detection
         create_namespace: true
