@@ -5,16 +5,12 @@ metadata:
   namespace: webapp
 data:
   api.conf: |
-    upstream app_server {
-        server 127.0.0.1:8000 fail_timeout=0;
-    }
-
     server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
+        listen 8002 default_server;
+        listen [::]:8002 default_server;
         server_name localhost;
         root /var/www/api;
-        client_max_body_size 1G;
+        client_max_body_size 4G;
 
         access_log stdout;
         error_log  stderr;
@@ -22,16 +18,5 @@ data:
         location /static/ {
             alias /var/www/api/;
             autoindex on;
-        }
-
-        location / {
-            try_files $uri @django;
-        }
-
-        location @django {
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header Host $http_host;
-            proxy_redirect off;
-            proxy_pass http://app_server;
         }
     }

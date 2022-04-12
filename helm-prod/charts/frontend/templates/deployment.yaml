@@ -53,7 +53,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8002
               protocol: TCP
           volumeMounts:
             - name: nginx-conf
