@@ -45,8 +45,10 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: frontend
-  port: 80
+  nginx:
+    port: 8002
+  gunicorn:
+    port: 8000
 
 sidecar:
   nginx:
@@ -58,7 +60,7 @@ sidecar:
 ingressroute:
   name: frontend-ingress
   routes:
-    match: PathPrefix(`/`)
+    match: Host(`reduce.isis.cclrc.ac.uk`)
 
 job:
   ttlSecondsAfterFinished: 20
