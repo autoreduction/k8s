@@ -31,6 +31,11 @@
         definition: "{{ lookup('template', 'templates/tls-secret.yaml.j2') | from_yaml }}"
       when: create_certs | bool
 
+    - name: Ensure HTTP to HTTPS redirect is present on localhost
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/https-redirect.yaml.j2') | from_yaml }}"
+
     - name: Deploy Helm chart for frontend
       kubernetes.core.helm:
         name: frontend

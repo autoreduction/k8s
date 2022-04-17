@@ -12,6 +12,7 @@ spec:
       kind: Rule
       middlewares:
         - name: frontend-gunicorn-linkerd-middleware
+        - name: redirect-https
       services:
         - name: frontend-gunicorn
           port: {{ .Values.service.gunicorn.port }}
