@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/autoreduction/autoreduce-run-detection
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2021-11-30T1345
+  tag: 2022-04-08T0835
 
 imagePullSecrets: []
 nameOverride: ""

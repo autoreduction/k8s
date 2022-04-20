@@ -34,15 +34,15 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
+            - secretRef:
+                name: run-detection-secret
             - configMapRef:
                 name: run-detection-config
           volumeMounts:
           - name: run-detection-vol
-            # TODO: Correct this path
-            mountPath: /data
+            mountPath: /run-detection
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-
       volumes:
         - name: run-detection-vol
           persistentVolumeClaim:

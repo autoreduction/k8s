@@ -15,14 +15,14 @@
         state: present
         definition: "{{ lookup('template', 'templates/run-detection-configmap.yaml.j2') | from_yaml }}"
 
+    - name: Create run-detection secret for environmental variables
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/run-detection-secret.yaml.j2') | from_yaml }}"
+
     - name: Deploy Helm chart for run-detection
       kubernetes.core.helm:
         name: run-detection
         chart_ref: ../../../helm-prod/charts/run-detection
         release_namespace: run-detection
         create_namespace: true
-        values:
-          environment:
-            production: "{{ production_var }}"
-          image:
-            tag: "{{ run-detection_tag }}"
