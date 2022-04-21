@@ -8,8 +8,6 @@ ENV PYTHONUNBUFFERED 1
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update &&\
     apt-get install -y wget gnupg git software-properties-common python3-dev default-libmysqlclient-dev build-essential
 
-RUN pip install dumb-init
-
 # Create non-root user and configure it for the project to run correctly with it.
 RUN useradd -m --no-log-init -s /bin/bash -u 880844730 isisautoreduce
 USER isisautoreduce
@@ -21,8 +19,12 @@ ENV PATH=/home/isisautoreduce/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbi
 # Note: mysqlclient is required when connecting to the production DB
 RUN python3 -m pip install --user --no-cache-dir mysqlclient debugpy
 
-ADD autoreduce_run_detection/ ./src
-ADD setup.py .
-RUN pip install .
+USER root
+RUN mkdir -p /run-detection/
+RUN chown isisautoreduce:isisautoreduce /run-detection/
+USER isisautoreduce
 
-ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+ADD . .
+RUN python3 -m pip install --user .
+
+CMD autoreduce-run-detection
