@@ -15,7 +15,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 cronjob:
-  create: false
+  create: true
 
 serviceAccount:
   # Specifies whether a service account should be created
