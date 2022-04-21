@@ -33,16 +33,26 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [ "sh", "-c"]
+          # loop forever, outputting "yo" every 5 seconds
+          args: ["while true; do echo 'yo' && sleep 5; done;"]
           envFrom:
             - secretRef:
                 name: run-detection-secret
             - configMapRef:
                 name: run-detection-config
           volumeMounts:
-          - name: run-detection-vol
-            mountPath: /run-detection
+            - name: run-detection-vol
+              mountPath: /run-detection/
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      initContainers:
+      - name: init-run-detection
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        command: ["touch", "/run-detection/last_runs.csv"]
+        volumeMounts:
+          - name: run-detection-vol
+            mountPath: /run-detection/
       volumes:
         - name: run-detection-vol
           persistentVolumeClaim:
