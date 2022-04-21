@@ -32,4 +32,4 @@ jobs:
           fi
 
       - name: Run chart-testing (lint)
-        run: ct lint --all --config ./.github/configs/ct-lint.yaml
+        run: ct lint --all --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml
