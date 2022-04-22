@@ -1,32 +1,14 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ .Values.ingressroute.name }}
-  annotations:
-    kubernetes.io/ingress.class: traefik
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: {{ .Values.ingressroute.routes.match }}
-      kind: Rule
-      middlewares:
-        - name: frontend-gunicorn-linkerd-middleware
-      services:
-        - name: frontend-gunicorn
-          port: {{ .Values.service.gunicorn.port }}
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: {{ .Values.ingressroute.name }}-tls
+  name: frontend-ingress-tls
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: {{ .Values.ingressroute.routes.match }}
+    - match: Host(`reduce.isis.cclrc.ac.uk`)
       kind: Rule
       middlewares:
         - name: frontend-gunicorn-linkerd-middleware
@@ -39,7 +21,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ .Values.ingressroute.name }}-static
+  name: frontend-ingress-static-tls
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
@@ -63,7 +45,7 @@ metadata:
 spec:
   headers:
     customRequestHeaders:
-      l5d-dst-override: "frontend-gunicorn.webapp.svc.cluster.local:8000"
+      l5d-dst-override: "frontend-gunicorn.webapp.svc.cluster.local:{{ .Values.service.gunicorn.port }}"
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -72,4 +54,4 @@ metadata:
 spec:
   headers:
     customRequestHeaders:
-      l5d-dst-override: "frontend-nginx.webapp.svc.cluster.local:8002"
+      l5d-dst-override: "frontend-nginx.webapp.svc.cluster.local:{{ .Values.service.nginx.port }}"
