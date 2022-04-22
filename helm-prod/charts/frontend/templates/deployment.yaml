@@ -40,7 +40,7 @@ spec:
                 name: webapp-config
           ports:
             - name: gunicorn
-              containerPort: 8000
+              containerPort: {{ .Values.service.gunicorn.port }}
               protocol: TCP
           volumeMounts:
             - name: staticfiles
@@ -53,7 +53,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - name: http
-              containerPort: 8002
+              containerPort: {{ .Values.service.nginx.port }}
               protocol: TCP
           volumeMounts:
             - name: nginx-conf

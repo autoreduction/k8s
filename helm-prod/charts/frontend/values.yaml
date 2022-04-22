@@ -57,11 +57,6 @@ sidecar:
       periodSeconds: 3
       path: /
 
-ingressroute:
-  name: frontend-ingress
-  routes:
-    match: Host(`reduce.isis.cclrc.ac.uk`)
-
 job:
   ttlSecondsAfterFinished: 20
 
