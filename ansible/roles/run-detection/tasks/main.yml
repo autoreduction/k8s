@@ -20,11 +20,6 @@
         state: present
         definition: "{{ lookup('template', 'templates/run-detection-secret.yaml.j2') | from_yaml }}"
 
-    - name: Create a ConfigMap for csv contents
-      kubernetes.core.k8s:
-        state: present
-        definition: "{{ lookup('template', 'last-runs-configmap.yaml.j2') | from_yaml }}"
-
     - name: Deploy Helm chart for run-detection
       kubernetes.core.helm:
         name: run-detection

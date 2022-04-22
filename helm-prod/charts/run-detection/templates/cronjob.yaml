@@ -27,21 +27,15 @@ spec:
               volumeMounts:
                 - name: run-detection-vol
                   mountPath: /run-detection/
-                - name: last-runs-vol
-                  mountPath: /run-detection/last_runs.csv
-                  subPath: last_runs.csv
                 - name: archive-mount
                   mountPath: /isis
-          restartPolicy: OnFailure
           volumes:
             - name: run-detection-vol
               persistentVolumeClaim:
                 claimName: run-detection-pvc
-            - name: last-runs-vol
-              configMap:
-                name: last-runs-csv
             - name: archive-mount
               hostPath:
                 path: /isis
                 type: Directory
+          restartPolicy: OnFailure
 {{- end }}
