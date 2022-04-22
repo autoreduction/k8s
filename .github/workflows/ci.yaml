@@ -1,9 +1,13 @@
-name: Lint and Test Charts
+name: CI
 
-on: pull_request
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  lint-test:
+  lint-helm-charts:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
