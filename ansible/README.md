@@ -2,6 +2,7 @@
 
 - Must have Kubernetes, Ansible, and Ansible-Galaxy installed in your Python environment
 - Must have kubernetes.core installed ```ansible-galaxy collection install kubernetes.core```
+- Deployment cluster should be specified in ~/.kube/config and set as the current context
 
 ## Example Deployment Commands
 
