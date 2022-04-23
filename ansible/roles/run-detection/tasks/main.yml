@@ -1,6 +1,5 @@
 ---
 - name: Deployment
-  delegate_to: localhost
   run_once: true
   block:
     - name: Create run-detection namespace
@@ -23,6 +22,6 @@
     - name: Deploy Helm chart for run-detection
       kubernetes.core.helm:
         name: run-detection
-        chart_ref: ../../../helm-prod/charts/run-detection
+        chart_ref: ../helm-prod/charts/run-detection
         release_namespace: run-detection
         create_namespace: true

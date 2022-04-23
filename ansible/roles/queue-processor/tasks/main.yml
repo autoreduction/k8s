@@ -1,5 +1,4 @@
 - name: Deployment
-  delegate_to: localhost
   run_once: true
   block:
     - name: Create qp namespace
@@ -22,7 +21,7 @@
     - name: Deploy Helm chart for qp
       kubernetes.core.helm:
         name: queue-processor
-        chart_ref: ../../../helm-prod/charts/queue-processor
+        chart_ref: ../helm-prod/charts/queue-processor
         release_namespace: queue-processor
         create_namespace: true
         values:

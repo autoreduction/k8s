@@ -1,0 +1,10 @@
+---
+- name: Deploy autoreduction services
+  hosts: local
+
+  roles:
+    - { role: mysql, tags: ["mysql", "webapp"] }
+    - { role: frontend, tags: ["frontend", "webapp"] }
+    - { role: rest-api, tags: ["rest-api", "webapp"] }
+    - { role: run-detection, tags: ["run-detection"] }
+    - { role: queue-processor, tags: ["queue-processor"] }
