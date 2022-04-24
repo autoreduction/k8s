@@ -1,6 +1,5 @@
 ---
 - name: Deployment
-  delegate_to: localhost
   run_once: true
   block:
     - name: Create Webapp namespace
@@ -34,14 +33,9 @@
     - name: Deploy Helm chart for frontend
       kubernetes.core.helm:
         name: frontend
-        chart_ref: ../../../helm-prod/charts/frontend
+        chart_ref: ../helm-prod/charts/frontend
         release_namespace: webapp
         create_namespace: true
-        values:
-          environment:
-            production: "{{ production_var }}"
-          image:
-            tag: "{{ frontend_tag }}"
 
     - name: Run Django db migration job
       kubernetes.core.k8s:

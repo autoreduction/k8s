@@ -1,6 +1,6 @@
 # Kubernetes Deployments
 
-Scripts for deploying parts of the Autoreduce service
+This repo contains Helm charts for Autoreduce components, using Ansible for deployment.
 
 ## Architecture
 
