@@ -37,3 +37,6 @@ jobs:
 
       - name: Run chart-testing (lint)
         run: ct lint --all --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml
+
+      - name: Ansible Lint
+        uses: ansible-community/ansible-lint-action@main
