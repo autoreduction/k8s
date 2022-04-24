@@ -45,6 +45,8 @@ spec:
           volumeMounts:
             - name: staticfiles
               mountPath: /var/www/api/
+            - name: archive-mount
+              mountPath: /isis
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 
@@ -78,6 +80,10 @@ spec:
             name: backend-api-nginx
         - name: staticfiles
           emptyDir: {}
+        - name: archive-mount
+          hostPath:
+            path: /isis
+            type: Directory
 
       {{- with .Values.nodeSelector }}
       nodeSelector:
