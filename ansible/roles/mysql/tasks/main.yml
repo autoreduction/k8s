@@ -1,6 +1,5 @@
 ---
 - name: Deployment
-  delegate_to: localhost
   run_once: true
   block:
     - name: Create mysql configmap to create database
@@ -16,6 +15,6 @@
     - name: Deploy Helm chart for MySQL with values in template
       kubernetes.core.helm:
         name: mysql
-        chart_ref: ../../../helm-prod/charts/mysql
+        chart_ref: ../helm-prod/charts/mysql
         release_namespace: webapp
         create_namespace: true
