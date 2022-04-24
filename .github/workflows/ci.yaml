@@ -8,6 +8,7 @@ on:
 
 jobs:
   lint-helm-charts:
+    name: Lint Helm Charts
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,5 +39,11 @@ jobs:
       - name: Run chart-testing (lint)
         run: ct lint --all --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml
 
-      - name: Ansible Lint
+  lint-ansible:
+    name: Ansible Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ansible
         uses: ansible-community/ansible-lint-action@main
