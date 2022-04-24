@@ -1,25 +1,6 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: rest-api-ingress
-  annotations:
-    kubernetes.io/ingress.class: traefik
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Host(`reduce.isis.cclrc.ac.uk`) && PathPrefix(`/api`)
-      kind: Rule
-      middlewares:
-        - name: rest-api-linkerd-middleware
-        - name: redirect-https
-      services:
-        - name: rest-api
-          port: {{ .Values.service.port }}
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
   name: rest-api-ingress-tls
   annotations:
     kubernetes.io/ingress.class: traefik
@@ -44,4 +25,4 @@ metadata:
 spec:
   headers:
     customRequestHeaders:
-      l5d-dst-override: "rest-api.webapp.svc.cluster.local:8001"
+      l5d-dst-override: "rest-api.webapp.svc.cluster.local:{{ .Values.service.port }}"
