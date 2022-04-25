@@ -3,8 +3,9 @@
   hosts: local
 
   roles:
-    - { role: mysql, tags: ["mysql", "webapp"] }
-    - { role: frontend, tags: ["frontend", "webapp"] }
-    - { role: rest-api, tags: ["rest-api", "webapp"] }
-    - { role: run-detection, tags: ["run-detection"] }
-    - { role: queue-processor, tags: ["queue-processor"] }
+    - { role: mysql, tags: ["mysql", "webapp", "autoreduce"] }
+    - { role: frontend, tags: ["frontend", "webapp", "autoreduce"] }
+    - { role: rest-api, tags: ["rest-api", "webapp", "autoreduce"] }
+    - { role: run-detection, tags: ["run-detection", "autoreduce"] }
+    - { role: queue-processor, tags: ["queue-processor", "autoreduce"] }
+    - { role: strimzi_kafka, tags: ["strimzi_kafka", "autoreduce"] }
