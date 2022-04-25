@@ -8,14 +8,14 @@ image:
   repository: ghcr.io/autoreduction/autoreduce-run-detection
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2022-04-08T0835
+  tag: 2022-04-21T1236
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 cronjob:
-  create: false
+  create: true
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -29,8 +29,9 @@ serviceAccount:
 podAnnotations: {}
 
 podSecurityContext:
-  {}
-  # fsGroup: 2000
+  fsGroup: 880844730
+  runAsUser: 880844730
+  runAsGroup: 880844730
 
 securityContext:
   {}

@@ -11,13 +11,29 @@ spec:
     spec:
       template:
         spec:
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
           containers:
-          - name: run-detect-cron
-            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-            imagePullPolicy: IfNotPresent
-            command:
-            - /bin/sh
-            - -c
-            - autoreduce-run-detection >> ~/job-output.log
+            - name: run-detect-cron
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: run-detection-secret
+                - configMapRef:
+                    name: run-detection-config
+              volumeMounts:
+                - name: run-detection-vol
+                  mountPath: /run-detection/
+                - name: archive-mount
+                  mountPath: /isis
+          volumes:
+            - name: run-detection-vol
+              persistentVolumeClaim:
+                claimName: run-detection-pvc
+            - name: archive-mount
+              hostPath:
+                path: /isis
+                type: Directory
           restartPolicy: OnFailure
 {{- end }}
