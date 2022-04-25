@@ -12,9 +12,7 @@ spec:
       template:
         spec:
           securityContext:
-            runAsUser: 880844730
-            runAsGroup: 880844730
-            fsGroup: 880844730
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
           containers:
             - name: run-detect-cron
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

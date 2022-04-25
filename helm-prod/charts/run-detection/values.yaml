@@ -29,7 +29,9 @@ serviceAccount:
 podAnnotations: {}
 
 podSecurityContext:
-  { fsGroup: 880844730, runAsUser: 880844730, runAsGroup: 880844730 }
+  fsGroup: 880844730
+  runAsUser: 880844730
+  runAsGroup: 880844730
 
 securityContext:
   {}
