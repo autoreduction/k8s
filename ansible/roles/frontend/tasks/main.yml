@@ -36,6 +36,9 @@
         chart_ref: ../helm-prod/charts/frontend
         release_namespace: webapp
         create_namespace: true
+        values:
+          image:
+            tag: "{{ frontend_tag }}"
 
     - name: Run Django db migration job
       kubernetes.core.k8s:

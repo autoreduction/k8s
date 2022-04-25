@@ -8,3 +8,6 @@
         chart_ref: ../helm-prod/charts/rest-api
         release_namespace: webapp
         create_namespace: true
+        values:
+          image:
+            tag: "{{ api_tag }}"

@@ -3,9 +3,10 @@
 production_var: false
 
 # Container tags to deploy
-frontend_tag: "2022-04-16T1339"
-rest-api_tag: "2022-04-06T0406"
-run-detection_tag: "2022-04-21T1236"
+frontend_tag: 2022-04-16T1339
+api_tag: 2022-04-06T0406
+detection_tag: 2022-04-21T1236
+qp_tag: 2022-03-04T0216
 
 # Should TLS certs be created
 create_certs: false

@@ -25,3 +25,6 @@
         chart_ref: ../helm-prod/charts/run-detection
         release_namespace: run-detection
         create_namespace: true
+        values:
+          image:
+            tag: "{{ detection_tag }}"
