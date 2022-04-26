@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: api-config
-data:
-  AUTOREDUCTION_PRODUCTION: "1"
-  DJANGO_ALLOWED_HOSTS: "*" # Should be changed to actual allowed hosts once provisioned
