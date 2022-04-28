@@ -28,7 +28,6 @@
       kubernetes.core.k8s:
         state: present
         definition: "{{ lookup('template', 'templates/tls-secret.yaml.j2') | from_yaml }}"
-      when: create_certs | bool
 
     - name: Deploy Helm chart for frontend
       kubernetes.core.helm:
