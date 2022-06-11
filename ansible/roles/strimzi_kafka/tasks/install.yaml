@@ -16,8 +16,8 @@
   kubernetes.core.helm:
     name: strimzi
     namespace: "{{ strimzi_kafka_namespace }}"
-    create_namespace: true
     chart_ref: strimzi/strimzi-kafka-operator
+    update_repo_cache: True
     values:
       watchAnyNamespace: true
     state: present
