@@ -1,0 +1,19 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: autoreduce-user
+  namespace: {{ strimzi_kafka_namespace }}
+  labels:
+    strimzi.io/cluster: {{ strimzi_kafka_cluster_name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: data_ready
+          patternType: literal
+        operation: All
+        host: "*"
