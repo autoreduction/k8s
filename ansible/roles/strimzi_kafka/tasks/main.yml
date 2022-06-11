@@ -4,4 +4,3 @@
 
 - name: Create Kafka Cluster
   import_tasks: cluster.yaml
-  when: strimzi_kafka_create_cluster | bool
