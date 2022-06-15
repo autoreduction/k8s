@@ -8,16 +8,16 @@ spec:
     version: 3.2.0
     replicas: 3
     listeners:
-      - name: tls
-        port: 9093
+      - name: plain
+        port: 9092
         type: internal
-        tls: true
+        tls: false
         authentication:
           type: scram-sha-512
       - name: external
         port: 9094
         type: loadbalancer
-        tls: true
+        tls: false
         authentication:
           type: scram-sha-512
     authorization:
