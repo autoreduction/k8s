@@ -17,7 +17,7 @@
       status: "True"
     name: "{{ strimzi_kafka_cluster_name }}"
     namespace: "{{ strimzi_kafka_namespace }}"
-    wait_timeout: 360
+    wait_timeout: 1000
 
 - name: Create Kafka Topic
   kubernetes.core.k8s:
