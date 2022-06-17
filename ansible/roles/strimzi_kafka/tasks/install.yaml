@@ -17,7 +17,7 @@
     name: strimzi
     namespace: "{{ strimzi_kafka_namespace }}"
     chart_ref: strimzi/strimzi-kafka-operator
-    update_repo_cache: True
+    update_repo_cache: true
     values:
       watchAnyNamespace: true
     state: present
