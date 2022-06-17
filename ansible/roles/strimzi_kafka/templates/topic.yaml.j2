@@ -4,7 +4,7 @@ metadata:
   name: data-ready
   namespace: {{ strimzi_kafka_namespace }}
   labels:
-    strimzi.io/cluster: "{{ strimzi_kafka_cluster_name }}"
+    strimzi.io/cluster: {{ strimzi_kafka_cluster_name }}
 spec:
   topicName: data_ready
   partitions: 1
