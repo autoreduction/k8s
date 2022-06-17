@@ -10,7 +10,7 @@
     state: present
     kind: Kafka
     api_version: v1beta2
-    wait: yes
+    wait: true
     wait_sleep: 10
     wait_condition:
       type: Ready
