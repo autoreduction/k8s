@@ -17,12 +17,19 @@
     name: strimzi
     namespace: "{{ strimzi_kafka_namespace }}"
     chart_ref: strimzi/strimzi-kafka-operator
-    update_repo_cache: true
     values:
       watchAnyNamespace: true
     state: present
 
 - name: Wait for Kafka Deployment
-  shell: "kubectl rollout status -n {{ strimzi_kafka_namespace }} deploy/{{ item }}"
-  with_items:
-    - strimzi-cluster-operator
+  kubernetes.core.k8s:
+    state: present
+    kind: Deployment
+    wait: true
+    wait_sleep: 10
+    wait_condition:
+      type: Available
+      status: "True"
+    name: "strimzi-cluster-operator"
+    namespace: "{{ strimzi_kafka_namespace }}"
+    wait_timeout: 1000
