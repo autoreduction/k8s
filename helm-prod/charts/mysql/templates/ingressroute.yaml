@@ -11,4 +11,3 @@ spec:
     services:
     - name: mysql
       port: 3306
-      
