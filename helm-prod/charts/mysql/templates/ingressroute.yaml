@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mysql-traefik-tcp
+spec:
+  entryPoints:
+    - mysql
+  routes:
+  - match: HostSNI(`*`)
+    kind: Rule
+    services:
+    - name: mysql
+      port: 3306
+      

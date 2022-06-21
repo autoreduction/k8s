@@ -42,10 +42,8 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 3306
-  nodePort: 30036
-  name: http
 
 resources:
   {}
