@@ -2,7 +2,8 @@ galaxy_info:
   author: James Brookes
   description: Deploys autoreduce-frontend to a Kubernetes cluster
   license: MIT
-
-  min_ansible_version: 2.1
+  platforms:
+    - name: Debian
+  min_ansible_version: "5.0"
 
 dependencies: []
