@@ -1,35 +1,28 @@
 ---
-- name: Install ceph-common
+- name: Ensure dependencies are installed
   become: true
   ansible.builtin.package:
-    name: ceph-common
+    name: ceph
     state: present
-    update_cache: true
 
-- name: "Create instrument (RB directories) mount directory"
+- name: Create mountpoint
   become: true
   ansible.builtin.file:
-    path: /instrument/
+    path: /instrument
     state: directory
-    mode: 0755
+    mode: "u=rwx,g=rx,o=rx"
 
-- name: "Create Ceph key directory"
+- name: Ensure key is present
   become: true
-  ansible.builtin.file:
-    path: /etc/ceph/
-    state: directory
-    mode: 0700
-
-- name: "Copy over the cephfs key"
-  become: true
-  ansible.builtin.template:
-    src: deneb.key.j2
+  ansible.builtin.copy:
+    content: |
+      {{ vault_cephfs_key }}
     dest: /etc/ceph/deneb.key
-    owner: "root"
-    group: "root"
-    mode: 0700
+    owner: root
+    group: root
+    mode: "u=r,g=,o="
 
-- name: "Add instrument (RB directories) mount to fstab"
+- name: Ensure mount is configured
   become: true
   ansible.posix.mount:
     path: /instrument
