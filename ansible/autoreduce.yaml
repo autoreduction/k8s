@@ -18,7 +18,13 @@
 
 - name: Deploy qp external services
   hosts: openstack
+  vars:
+    pip_install_packages:
+      - name: docker
   roles:
+    - role: geerlingguy.pip
+      become: true
+      tags: ["qp-external"]
     - role: geerlingguy.docker
       become: true
       tags: ["qp-external"]

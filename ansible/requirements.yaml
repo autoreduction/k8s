@@ -1,6 +1,7 @@
 ---
 roles:
   - src: geerlingguy.docker
+  - src: geerlingguy.pip
 
 collections:
   - name: kubernetes.core
