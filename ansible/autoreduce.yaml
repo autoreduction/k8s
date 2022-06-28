@@ -9,3 +9,8 @@
     - { role: run-detection, tags: ["run-detection", "autoreduce"] }
     - { role: queue-processor, tags: ["queue-processor", "autoreduce"] }
     - { role: strimzi_kafka, tags: ["strimzi_kafka", "autoreduce"] }
+
+- name: Deploy qp external services
+  hosts: openstack
+  roles:
+    - { role: qp-external, tags: ["qp-external"] }

@@ -1,0 +1,45 @@
+---
+- name: Install package to enable mount.cifs
+  become: true
+  ansible.builtin.apt:
+    name: cifs-utils
+    state: latest
+    update_cache: true
+
+- name: Create ISIS archive directory
+  become: true
+  ansible.builtin.file:
+    path: /isis
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Copy over the archive credentials template
+  become: true
+  ansible.builtin.template:
+    src: archive.creds.j2
+    dest: /archive.creds
+    owner: root
+    group: root
+    mode: "u=rwx,g=,o="
+
+- name: Add the search path to /etc/resolv.conf
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/resolv.conf
+    line: search isis.cclrc.ac.uk
+
+- name: Mount the ISIS archive
+  become: true
+  ansible.posix.mount:
+    path: /isis
+    src: "{{ vault_archive_url }}"
+    fstype: cifs
+    opts: _netdev,vers=2.1,credentials=/archive.creds,iocharset=utf8,soft,
+    state: mounted
+
+- name: Create a symlink in /archive
+  become: true
+  ansible.builtin.file:
+    src: /isis
+    dest: /archive
+    state: link

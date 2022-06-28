@@ -1,0 +1,8 @@
+---
+# the uid of the runtime user is important as it used to verify the identity
+# of the user when interacting with ceph
+- name: Add runtime user
+  become: true
+  ansible.builtin.user:
+    name: "isisautoreduce"
+    uid: "{{ vault_autoreduction_user_id }}"
