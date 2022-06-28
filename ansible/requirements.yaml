@@ -1,2 +1,6 @@
 ---
-- src: geerlingguy.docker
+roles:
+  - src: geerlingguy.docker
+
+collections:
+  - name: kubernetes.core

@@ -1,7 +1,8 @@
 # Prerequisites
 
-- Must have Kubernetes, Ansible, and Ansible-Galaxy installed in your Python environment
-- Must have kubernetes.core installed ```ansible-galaxy collection install kubernetes.core```
+- Must have Kubernetes, Helm, Ansible, and Ansible-Galaxy installed in your Python environment
+- Install the ansible-galaxy requirements with ```ansible-galaxy install -r requirements.yaml```
+- (Optional) Install [helm-diff](https://github.com/databus23/helm-diff) with ```helm plugin install https://github.com/databus23/helm-diff```
 - Deployment cluster should be specified in ~/.kube/config and set as the current context
 - Set the Image tag you wish to deploy in group_vars
 
