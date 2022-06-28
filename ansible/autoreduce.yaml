@@ -13,4 +13,5 @@
 - name: Deploy qp external services
   hosts: openstack
   roles:
+    - { role: geerlingguy.docker, become: yes, tags: ["qp-external"] }
     - { role: qp-external, tags: ["qp-external"] }
