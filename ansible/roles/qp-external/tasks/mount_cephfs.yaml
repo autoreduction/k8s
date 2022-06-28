@@ -1,7 +1,7 @@
 ---
 - name: Install ceph-common
   become: true
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: ceph-common
     state: present
     update_cache: true
