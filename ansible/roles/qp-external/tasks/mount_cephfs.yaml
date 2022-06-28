@@ -8,21 +8,21 @@
 
 - name: "Create instrument (RB directories) mount directory"
   become: true
-  file:
+  ansible.builtin.file:
     path: /instrument/
     state: directory
     mode: 0755
 
 - name: "Create Ceph key directory"
   become: true
-  file:
+  ansible.builtin.file:
     path: /etc/ceph/
     state: directory
     mode: 0700
 
 - name: "Copy over the cephfs key"
   become: true
-  template:
+  ansible.builtin.template:
     src: deneb.key.j2
     dest: /etc/ceph/deneb.key
     owner: "root"
@@ -31,7 +31,7 @@
 
 - name: "Add instrument (RB directories) mount to fstab"
   become: true
-  mount:
+  ansible.posix.mount:
     path: /instrument
     src: deneb-mon1.nubes.rl.ac.uk,deneb-mon2.nubes.rl.ac.uk,deneb-mon3.nubes.rl.ac.uk:/isis/instrument
     fstype: ceph

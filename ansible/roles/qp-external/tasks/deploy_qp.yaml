@@ -29,6 +29,6 @@
       KAFKA_SASL_MECHANISM: "{{ vault_kafka_sasl_mechanism }}"
       KAFKA_SECURITY_PROTOCOL: "{{ vault_kafka_security_protocol }}"
     network_mode: host
-    detach: yes
+    detach: true
     comparisons:
       image: strict

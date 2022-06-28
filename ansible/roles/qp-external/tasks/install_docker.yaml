@@ -7,7 +7,7 @@
       - ca-certificates
       - lsb-release
       - gnupg
-    state: latest
+    state: present
     update_cache: true
 
 - name: Add signing key
@@ -31,7 +31,7 @@
       - docker.io
       - docker-compose
       - docker-registry
-    state: latest
+    state: present
     update_cache: true
 
 - name: Start docker service
@@ -42,7 +42,7 @@
 
 # This is required by community.docker to run the docker commands
 - name: Install docker from pip
-  pip:
+  ansible.builtin.pip:
     executable: pip3
     name: docker
 
@@ -54,7 +54,7 @@
 
 - name: Adding user isisautoreduce to `docker` group to allow sudoless docker usage
   become: true
-  user: name=isisautoreduce
+  ansible.builtin.user: name=isisautoreduce
     group=isisautoreduce
     shell=/bin/bash
     password=${password}
