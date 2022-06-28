@@ -7,5 +7,5 @@ data:
   initdb.sql: |
     CREATE DATABASE IF NOT EXISTS autoreduction;
     USE autoreduction;
-    CREATE USER 'autoreduce'@'%' IDENTIFIED BY '{{ vault_mysql_user_password }}';
+    CREATE USER 'autoreduce'@'%' IDENTIFIED BY '{{ db_secrets.user_password}}';
     GRANT ALL PRIVILEGES ON autoreduction.* TO 'autoreduce'@'%';
