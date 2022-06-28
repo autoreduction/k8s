@@ -26,8 +26,8 @@
       KAFKA_TOPIC: "data_ready"
       KAFKA_SASL_USERNAME: "{{ vault_kafka_sasl_username }}"
       KAFKA_SASL_PASSWORD: "{{ vault_kafka_sasl_password }}"
-      KAFKA_SASL_MECHANISM: "{{ vault_kafka_sasl_mechanism }}"
-      KAFKA_SECURITY_PROTOCOL: "{{ vault_kafka_security_protocol }}"
+      KAFKA_SASL_MECHANISM: "SCRAM-SHA-512"
+      KAFKA_SECURITY_PROTOCOL: "SASL_PLAINTEXT"
     network_mode: host
     detach: true
     comparisons:
