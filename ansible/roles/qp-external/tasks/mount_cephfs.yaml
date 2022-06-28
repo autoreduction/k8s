@@ -3,7 +3,7 @@
   become: true
   ansible.builtin.apt:
     name: ceph-common
-    state: latest
+    state: present
     update_cache: true
 
 - name: "Create instrument (RB directories) mount directory"

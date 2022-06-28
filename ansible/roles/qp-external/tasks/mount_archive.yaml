@@ -3,7 +3,7 @@
   become: true
   ansible.builtin.apt:
     name: cifs-utils
-    state: latest
+    state: present
     update_cache: true
 
 - name: Create ISIS archive directory
