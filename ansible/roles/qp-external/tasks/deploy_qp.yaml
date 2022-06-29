@@ -28,6 +28,10 @@
       KAFKA_SASL_PASSWORD: "{{ vault_kafka_sasl_password }}"
       KAFKA_SASL_MECHANISM: "SCRAM-SHA-512"
       KAFKA_SECURITY_PROTOCOL: "SASL_PLAINTEXT"
+    volumes:
+      - /home/isisautoreduce/.autoreduce:/home/isisautoreduce/.autoreduce:rw
+      - /instrument:/instrument:rw
+      - /isis:/isis
     network_mode: host
     detach: true
     comparisons:
