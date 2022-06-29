@@ -21,6 +21,19 @@
     group: root
     mode: "u=rwx,g=,o="
 
+- name: Ensure DNS configuration is appropriate for ISIS data archive
+  become: true
+  ansible.builtin.copy:
+    src: resolved.conf
+    dest: /etc/systemd
+    mode: "u=rw,g=r,o=r"
+
+- name: Restart resolved to ensure DNS configuration is up to date
+  become: true
+  ansible.builtin.service:
+    name: systemd-resolved.service
+    state: restarted
+
 - name: Ensure mount is configured
   become: true
   ansible.builtin.mount:
