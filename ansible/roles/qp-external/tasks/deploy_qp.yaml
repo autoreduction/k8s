@@ -1,4 +1,14 @@
+# Install acl package required for Ansible to become non-root user
+- name: Install acl package
+  become: true
+  ansible.builtin.package:
+    name: acl
+    state: present
+
+# Start the container using the user in the Docker group (isisautoreduce)
 - name: Start the container
+  become: true
+  become_user: isisautoreduce
   community.docker.docker_container:
     name: queue-processor
     image: ghcr.io/autoreduction/autoreduce:latest
