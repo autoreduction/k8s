@@ -4,5 +4,8 @@
 - name: Add runtime user
   become: true
   ansible.builtin.user:
-    name: "isisautoreduce"
+    name: isisautoreduce
     uid: "{{ vault_autoreduction_user_id }}"
+    shell: /bin/bash
+    groups: docker
+    append: yes
