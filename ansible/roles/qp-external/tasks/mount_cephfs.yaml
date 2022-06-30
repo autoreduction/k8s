@@ -16,7 +16,7 @@
   become: true
   ansible.builtin.copy:
     content: |
-      {{ vault_cephfs_key }}
+      {{ ceph_secrets.key }}
     dest: /etc/ceph/deneb.key
     owner: root
     group: root
