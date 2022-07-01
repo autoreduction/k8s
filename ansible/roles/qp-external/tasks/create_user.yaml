@@ -12,7 +12,7 @@
 
 - name: Ensures ~/.autoreduce dir exists
   become: true
-  file:
+  ansible.builtin.file:
     path: /home/isisautoreduce/.autoreduce/
     state: directory
     owner: "isisautoreduce"
