@@ -9,3 +9,12 @@
     shell: /bin/bash
     groups: docker
     append: true
+
+- name: Ensures ~/.autoreduce dir exists
+  become: true
+  file:
+    path: /home/isisautoreduce/.autoreduce/
+    state: directory
+    owner: "isisautoreduce"
+    group: "isisautoreduce"
+    mode: "u=rwx,g=,o="
