@@ -36,7 +36,7 @@
 
 - name: Ensure mount is configured
   become: true
-  ansible.builtin.mount:
+  ansible.posix.mount:
     path: /isis
     src: "//isis.cclrc.ac.uk/inst$/"
     fstype: cifs
