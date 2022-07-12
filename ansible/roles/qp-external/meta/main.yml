@@ -1,0 +1,17 @@
+galaxy_info:
+  author: James Brookes
+  description: Deploys autoreduce-qp to an external OpenStack VM
+  license: MIT
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+  min_ansible_version: "5.0"
+
+dependencies: []

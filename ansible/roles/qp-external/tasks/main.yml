@@ -1,0 +1,12 @@
+---
+- name: Create User
+  import_tasks: create_user.yaml
+
+- name: Mount CephFS
+  import_tasks: mount_cephfs.yaml
+
+- name: Mount archive
+  import_tasks: mount_archive.yaml
+
+- name: Deploy QP
+  import_tasks: deploy_qp.yaml
