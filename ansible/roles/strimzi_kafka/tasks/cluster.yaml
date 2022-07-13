@@ -24,6 +24,11 @@
     state: present
     definition: "{{ lookup('template', 'templates/topic.yaml.j2') | from_yaml }}"
 
+- name: Create Kafka User Secret
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'templates/user_secret.yaml.j2') | from_yaml }}"
+
 - name: Create Kafka User
   kubernetes.core.k8s:
     state: present
