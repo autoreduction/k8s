@@ -26,5 +26,5 @@ ansible-playbook autoreduce.yaml --tags webapp --vault-password-file ~/.vault_pa
 Skip the queue-processor service (run all tasks, ignore queue-processor)
 
 ```bash
-ansible-playbook autoreduce.yaml --skip-tags queue-processor --vault-password-file ~/.vault_pass.txt
+ansible-playbook autoreduce.yaml --skip-tags queue_processor --vault-password-file ~/.vault_pass.txt
 ```
