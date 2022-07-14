@@ -28,5 +28,5 @@
     - role: geerlingguy.docker
       become: true
       tags: ["qp_external"]
-    - role: qp-external
+    - role: qp_external
       tags: ["qp_external"]
