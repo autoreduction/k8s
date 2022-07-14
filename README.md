@@ -1,6 +1,6 @@
 # Kubernetes Deployments
 
-This repo contains Helm charts for Autoreduce components, using Ansible for deployment.
+This repo contains Kubernetes YAML manifests charts for Autoreduce components, using Ansible for deployment.
 
 ## Architecture
 
