@@ -2,6 +2,13 @@
 - name: Deployment of mysql
   run_once: true
   block:
+    - name: Create a k8s namespace
+      kubernetes.core.k8s:
+        name: webapp
+        api_version: v1
+        kind: Namespace
+        state: present
+
     - name: Ensure deployment of mysql
       kubernetes.core.k8s:
         definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
