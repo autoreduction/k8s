@@ -1,13 +1,13 @@
 ---
-- name: Deployment
+- name: Deployment of rest-api
   run_once: true
   block:
-    - name: Deploy Helm chart for rest-api
-      kubernetes.core.helm:
-        name: rest-api
-        chart_ref: ../helm-prod/charts/rest-api
-        release_namespace: webapp
-        create_namespace: true
-        values:
-          image:
-            tag: "{{ api_tag }}"
+    - name: Ensure deployment of rest-api
+      kubernetes.core.k8s:
+        definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
+        state: present
+      loop:
+        - service.yaml
+        - serviceaccount.yaml
+        - ingressroute.yaml
+        - deployment.yaml

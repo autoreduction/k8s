@@ -1,20 +1,16 @@
 ---
-- name: Deployment
+- name: Deployment of mysql
   run_once: true
   block:
-    - name: Create mysql configmap to create database
+    - name: Ensure deployment of mysql
       kubernetes.core.k8s:
+        definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
         state: present
-        definition: "{{ lookup('template', 'templates/mysql-initdb.yaml.j2') | from_yaml }}"
-
-    - name: Create mysql secret for credentials
-      kubernetes.core.k8s:
-        state: present
-        definition: "{{ lookup('template', 'templates/mysql-secret.yaml.j2') | from_yaml }}"
-
-    - name: Deploy Helm chart for MySQL with values in template
-      kubernetes.core.helm:
-        name: mysql
-        chart_ref: ../helm-prod/charts/mysql
-        release_namespace: webapp
-        create_namespace: true
+      loop:
+        - mysql-initdb.yaml
+        - mysql-secret.yaml
+        - service.yaml
+        - serviceaccount.yaml
+        - ingressroute.yaml
+        - pv.yaml
+        - deployment.yaml

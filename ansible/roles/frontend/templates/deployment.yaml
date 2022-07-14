@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: webapp
+  labels:
+    app.kubernetes.io/instance: frontend
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: frontend
+      app.kubernetes.io/name: frontend
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app.kubernetes.io/instance: frontend
+        app.kubernetes.io/name: frontend
+    spec:
+      serviceAccountName: frontend-service-account
+      containers:
+        - name: frontend
+          image: "ghcr.io/autoreduction/autoreduce-frontend:{{ frontend_tag }}"
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: webapp-secret
+            - configMapRef:
+                name: webapp-config
+          ports:
+            - name: gunicorn
+              containerPort: 8000
+              protocol: TCP
+          volumeMounts:
+            - name: staticfiles
+              mountPath: /var/www/api/
+            - name: archive-mount
+              mountPath: /isis
+
+        - name: nginx-sidecar
+          image: nginx:stable
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8002
+              protocol: TCP
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
+            - name: staticfiles
+              mountPath: /var/www/api/
+
+      initContainers:
+        - name: init-collectstatic
+          image: "ghcr.io/autoreduction/autoreduce-frontend:{{ frontend_tag }}"
+          env:
+            - name: AUTOREDUCTION_PRODUCTION
+              value: "True"
+          command: ["autoreduce-webapp-manage", "collectstatic", "--noinput"]
+          volumeMounts:
+            - name: staticfiles
+              mountPath: /var/www/api/
+
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: backend-api-nginx
+        - name: staticfiles
+          emptyDir: {}
+        - name: archive-mount
+          hostPath:
+            path: /isis
+            type: Directory

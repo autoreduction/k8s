@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: run-detection-cron
+  namespace: run-detection
+  labels:
+    app.kubernetes.io/instance: run-detection-cron
+    app.kubernetes.io/name: run-detection-cron
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: run-detection-service-account
+          securityContext:
+            fsGroup: 880844730
+            runAsUser: 880844730
+            runAsGroup: 880844730
+          containers:
+            - name: run-detect-cron
+              image: "ghcr.io/autoreduction/autoreduce-run-detection:{{ detection_tag }}"
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: run-detection-secret
+                - configMapRef:
+                    name: run-detection-config
+              volumeMounts:
+                - name: run-detection-vol
+                  mountPath: /run-detection/
+                - name: archive-mount
+                  mountPath: /isis
+          volumes:
+            - name: run-detection-vol
+              persistentVolumeClaim:
+                claimName: run-detection-pvc
+            - name: archive-mount
+              hostPath:
+                path: /isis
+                type: Directory
+          restartPolicy: OnFailure

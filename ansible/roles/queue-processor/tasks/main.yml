@@ -1,29 +1,14 @@
-- name: Deployment
+---
+- name: Deployment of queue-processor
   run_once: true
   block:
-    - name: Create qp namespace
+    - name: Ensure deployment of queue-processor
       kubernetes.core.k8s:
-        name: "queue-processor"
-        api_version: v1
-        kind: Namespace
+        definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
         state: present
-
-    - name: Create a ConfigMap for queue processor
-      kubernetes.core.k8s:
-        state: present
-        definition: "{{ lookup('template', 'templates/qp-configmap.yaml.j2') | from_yaml }}"
-
-    - name: Create queue processor secret
-      kubernetes.core.k8s:
-        state: present
-        definition: "{{ lookup('template', 'templates/qp-secret.yaml.j2') | from_yaml }}"
-
-    - name: Deploy Helm chart for qp
-      kubernetes.core.helm:
-        name: queue-processor
-        chart_ref: ../helm-prod/charts/queue-processor
-        release_namespace: queue-processor
-        create_namespace: true
-        values:
-          image:
-            tag: "{{ qp_tag }}"
+      loop:
+        - qp-configmap.yaml.j2
+        - qp-secret.yaml.j2
+        - service.yaml.j2
+        - serviceaccount.yaml.j2
+        - deployment.yaml.j2
