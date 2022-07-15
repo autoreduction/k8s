@@ -69,4 +69,3 @@ jobs:
           # Optional, additional flags to pass to ansible-playbook
           options: |
             --tags strimzi_kafka
-            --inventory ./ansible/inventory.ini
