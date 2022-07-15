@@ -11,7 +11,28 @@ jobs:
     name: Ansible Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Ansible
         uses: ansible-community/ansible-lint-action@main
+
+  e2e-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+        run: |
+          pip install --upgrade pip
+          pip install ansible
+
+      - name: Start k8s cluster
+        id: minikube
+        uses: medyagh/setup-minikube@latest
+
+      - name: Run Ansible Playbook
+        run: |
+          echo "Deploying frontend....."
