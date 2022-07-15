@@ -55,4 +55,5 @@ jobs:
 
       - name: Run Ansible Playbook
         run: |
-          echo "Deploying frontend....."
+          echo "Deploying Strimzi....."
+          ansible-playbook ./ansible/autoreduce.yaml --tags strimzi_kafka --vault-password ${{ secrets.VAULT_KEY }} -e 'ansible_python_interpreter=/usr/bin/python3'
