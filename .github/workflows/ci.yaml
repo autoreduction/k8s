@@ -53,7 +53,12 @@ jobs:
           helm repo update
           helm install traefik traefik/traefik
 
-      - name: Run Ansible Playbook
-        run: |
-          echo "Deploying Strimzi....."
-          ansible-playbook ./ansible/autoreduce.yaml --tags strimzi_kafka --vault-password ${{ secrets.VAULT_KEY }} -e 'ansible_python_interpreter=/usr/bin/python3'
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: ./ansible/autoreduce.yaml
+          # Optional, encrypted vault password
+          vault_password: ${{secrets.VAULT_KEY}}
+          # Optional, additional flags to pass to ansible-playbook
+          options: |
+            --tags strimzi_kafka
