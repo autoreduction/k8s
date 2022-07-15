@@ -29,10 +29,21 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install ansible
+          pip install kubernetes
+          ansible-galaxy install -r ./ansible/requirements.yaml
 
-      - name: Start k8s cluster
-        id: minikube
-        uses: medyagh/setup-minikube@latest
+      - name: Create k8s Kind Cluster
+        uses: helm/kind-action@v1.3.0
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+        id: install
+
+      - name: Install Traefik Helm Chart
+        run: |
+          helm repo add traefik https://helm.traefik.io/traefik
+          helm repo update
+          helm install traefik traefik/traefik
 
       - name: Run Ansible Playbook
         run: |
