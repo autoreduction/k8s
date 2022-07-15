@@ -31,6 +31,9 @@ jobs:
           pip install ansible
           pip install kubernetes
           ansible-galaxy install -r ./ansible/requirements.yaml
+          which pip
+          which pip3
+          which python3
 
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.3.0
@@ -52,14 +55,3 @@ jobs:
           helm repo add traefik https://helm.traefik.io/traefik
           helm repo update
           helm install traefik traefik/traefik
-
-      - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
-        with:
-          playbook: ./ansible/autoreduce.yaml
-          # Optional, encrypted vault password
-          vault_password: ${{secrets.VAULT_KEY}}
-          # Optional, additional flags to pass to ansible-playbook
-          options: |
-            --tags strimzi_kafka
-            --inventory ./ansible/inventory.ini
