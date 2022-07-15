@@ -39,6 +39,13 @@ jobs:
         uses: azure/setup-helm@v3
         id: install
 
+      - name: Install Linkerd
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install | sh
+          linkerd check --pre
+          linkerd install | kubectl apply -f -
+          linkerd check
+
       - name: Install Traefik Helm Chart
         run: |
           helm repo add traefik https://helm.traefik.io/traefik
