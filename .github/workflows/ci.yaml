@@ -55,3 +55,15 @@ jobs:
           helm repo add traefik https://helm.traefik.io/traefik
           helm repo update
           helm install traefik traefik/traefik
+
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: ./ansible/autoreduce.yaml
+          # Optional, encrypted vault password
+          vault_password: ${{secrets.VAULT_KEY}}
+          # Optional, additional flags to pass to ansible-playbook
+          options: |
+            --tags strimzi_kafka
+            --inventory ./ansible/inventory.ini
+            -e ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3
