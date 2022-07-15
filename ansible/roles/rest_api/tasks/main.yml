@@ -18,3 +18,17 @@
         - serviceaccount.yaml
         - ingressroute.yaml
         - deployment.yaml
+
+    - name: Wait for rest-api to be ready
+      kubernetes.core.k8s:
+        state: present
+        kind: Deployment
+        api_version: apps/v1
+        wait: true
+        wait_sleep: 10
+        wait_condition:
+          type: Ready
+          status: "True"
+        name: "rest-api"
+        namespace: "webapp"
+        wait_timeout: 120

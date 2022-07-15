@@ -19,3 +19,17 @@
         - service.yaml.j2
         - serviceaccount.yaml.j2
         - deployment.yaml.j2
+
+    - name: Wait for queue-processor to be ready
+      kubernetes.core.k8s:
+        state: present
+        kind: Deployment
+        api_version: apps/v1
+        wait: true
+        wait_sleep: 10
+        wait_condition:
+          type: Ready
+          status: "True"
+        name: "queue-processor"
+        namespace: "queue-processor"
+        wait_timeout: 120

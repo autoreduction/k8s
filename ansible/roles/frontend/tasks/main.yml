@@ -23,3 +23,17 @@
         - ingressroute.yaml
         - deployment.yaml
         - django-migrate.yaml
+
+    - name: Wait for frontend to be ready
+      kubernetes.core.k8s:
+        state: present
+        kind: Deployment
+        api_version: apps/v1
+        wait: true
+        wait_sleep: 10
+        wait_condition:
+          type: Ready
+          status: "True"
+        name: "frontend"
+        namespace: "webapp"
+        wait_timeout: 120

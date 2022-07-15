@@ -68,4 +68,4 @@ jobs:
             localhost ansible_host=localhost ansible_connection=local ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3
           # Optional, additional flags to pass to ansible-playbook
           options: |
-            --tags strimzi_kafka
+            --tags webapp

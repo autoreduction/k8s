@@ -5,5 +5,5 @@ production_var: false
 # Container tags to deploy
 frontend_tag: 2022-06-28T0112
 api_tag: 2022-06-28T1103
-detection_tag: 2022-04-21T1236
-qp_tag: 2022-06-27T1408
+detection_tag: 2022-07-14T0950
+qp_tag: 2022-07-15T0934
