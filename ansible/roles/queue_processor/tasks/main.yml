@@ -1,23 +1,21 @@
 ---
-- name: Deployment of mysql
+- name: Deployment of queue-processor
   run_once: true
   block:
     - name: Create a k8s namespace
       kubernetes.core.k8s:
-        name: webapp
+        name: queue-processor
         api_version: v1
         kind: Namespace
         state: present
 
-    - name: Ensure deployment of mysql
+    - name: Ensure deployment of queue-processor
       kubernetes.core.k8s:
         definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
         state: present
       loop:
-        - mysql-initdb.yaml
-        - mysql-secret.yaml
-        - service.yaml
-        - serviceaccount.yaml
-        - ingressroute.yaml
-        - pv.yaml
-        - deployment.yaml
+        - qp-configmap.yaml.j2
+        - qp-secret.yaml.j2
+        - service.yaml.j2
+        - serviceaccount.yaml.j2
+        - deployment.yaml.j2

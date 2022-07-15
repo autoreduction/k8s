@@ -1,25 +1,21 @@
 ---
-- name: Deployment of frontend
+- name: Deployment of run-detection
   run_once: true
   block:
     - name: Create a k8s namespace
       kubernetes.core.k8s:
-        name: webapp
+        name: run-detection
         api_version: v1
         kind: Namespace
         state: present
 
-    - name: Ensure deployment of frontend
+    - name: Ensure deployment of run-detection
       kubernetes.core.k8s:
         definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
         state: present
       loop:
-        - nginx-configmap.yaml
-        - webapp-configmap.yaml
-        - webapp-secret.yaml
-        - tls-secret.yaml
-        - service.yaml
+        - run-detection-configmap.yaml
+        - run-detection-secret.yaml
+        - pv.yaml
         - serviceaccount.yaml
-        - ingressroute.yaml
-        - deployment.yaml
-        - django-migrate.yaml
+        - cronjob.yaml

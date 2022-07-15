@@ -3,7 +3,7 @@
   kubernetes.core.k8s:
     state: present
     namespace: "{{ strimzi_kafka_namespace }}"
-    definition: "{{ lookup('template', 'templates/cluster.yaml.j2') | from_yaml }}"
+    definition: "{{ lookup('template', 'templates/cluster.yaml') | from_yaml }}"
 
 - name: Wait for Kafka Cluster
   kubernetes.core.k8s:
@@ -22,14 +22,14 @@
 - name: Create Kafka Topic
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('template', 'templates/topic.yaml.j2') | from_yaml }}"
+    definition: "{{ lookup('template', 'templates/topic.yaml') | from_yaml }}"
 
 - name: Create Kafka User Secret
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('template', 'templates/user_secret.yaml.j2') | from_yaml }}"
+    definition: "{{ lookup('template', 'templates/user_secret.yaml') | from_yaml }}"
 
 - name: Create Kafka User
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('template', 'templates/user.yaml.j2') | from_yaml }}"
+    definition: "{{ lookup('template', 'templates/user.yaml') | from_yaml }}"

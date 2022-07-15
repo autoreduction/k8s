@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-processor
+  namespace: queue-processor
+  labels:
+    app.kubernetes.io/instance: queue-processor
+    app.kubernetes.io/name: queue-processor
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: queue-processor
+      app.kubernetes.io/name: queue-processor
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app.kubernetes.io/instance: queue-processor
+        app.kubernetes.io/name: queue-processor
+    spec:
+      serviceAccountName: queue-processor-service-account
+      containers:
+        - name: queue-processor
+          image: "ghcr.io/autoreduction/autoreduce:{{ qp_tag }}"
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: qp-secret
+            - configMapRef:
+                name: qp-config
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: archive-mount
+              mountPath: /isis
+            - name: ceph-mount
+              mountPath: /instrument
+      volumes:
+        - name: archive-mount
+          hostPath:
+            path: /isis
+            type: Directory
+        - name: ceph-mount
+          hostPath:
+            path: /instrument
+            type: Directory

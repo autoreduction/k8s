@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-api
+  namespace: webapp
+  labels:
+    app.kubernetes.io/instance: rest-api
+    app.kubernetes.io/name: rest-api
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: rest-api
+      app.kubernetes.io/name: rest-api
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app.kubernetes.io/instance: rest-api
+        app.kubernetes.io/name: rest-api
+    spec:
+      serviceAccountName: rest-api-service-account
+      containers:
+        - name: rest-api
+          image: "ghcr.io/autoreduction/autoreduce-rest-api:{{ api_tag }}"
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: webapp-secret
+            - configMapRef:
+                name: webapp-config
+          ports:
+            - name: http
+              containerPort: 8001
+              protocol: TCP

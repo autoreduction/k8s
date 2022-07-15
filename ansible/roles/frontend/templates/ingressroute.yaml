@@ -1,0 +1,61 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: frontend-ingress-tls
+  namespace: webapp
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`reduce.isis.cclrc.ac.uk`)
+      kind: Rule
+      middlewares:
+        - name: frontend-gunicorn-linkerd-middleware
+      services:
+        - name: frontend-gunicorn
+          port: 8000
+  tls:
+    secretName: ssl-cert
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: frontend-ingress-static-tls
+  namespace: webapp
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`reduce.isis.cclrc.ac.uk`) && PathPrefix(`/static`)
+      kind: Rule
+      middlewares:
+        - name: frontend-nginx-linkerd-middleware
+      services:
+        - name: frontend-nginx
+          port: 8002
+  tls:
+    secretName: ssl-cert
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: frontend-gunicorn-linkerd-middleware
+  namespace: webapp
+spec:
+  headers:
+    customRequestHeaders:
+      l5d-dst-override: "frontend-gunicorn.webapp.svc.cluster.local:8000"
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: frontend-nginx-linkerd-middleware
+  namespace: webapp
+spec:
+  headers:
+    customRequestHeaders:
+      l5d-dst-override: "frontend-nginx.webapp.svc.cluster.local:8002"

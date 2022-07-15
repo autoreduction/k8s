@@ -2,7 +2,6 @@
 
 - Must have Kubernetes, Helm, Ansible, and Ansible-Galaxy installed in your Python environment
 - Install the ansible-galaxy requirements with ```ansible-galaxy install -r requirements.yaml```
-- (Optional) Install [helm-diff](https://github.com/databus23/helm-diff) with ```helm plugin install https://github.com/databus23/helm-diff```
 - Deployment cluster should be specified in ~/.kube/config and set as the current context
 - Set the Image tag you wish to deploy in group_vars
 
@@ -26,5 +25,5 @@ ansible-playbook autoreduce.yaml --tags webapp --vault-password-file ~/.vault_pa
 Skip the queue-processor service (run all tasks, ignore queue-processor)
 
 ```bash
-ansible-playbook autoreduce.yaml --skip-tags queue-processor --vault-password-file ~/.vault_pass.txt
+ansible-playbook autoreduce.yaml --skip-tags queue_processor --vault-password-file ~/.vault_pass.txt
 ```
