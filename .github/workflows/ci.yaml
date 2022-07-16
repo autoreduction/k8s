@@ -70,3 +70,10 @@ jobs:
           # Optional, additional flags to pass to ansible-playbook
           options: |
             --tags webapp
+
+      - name: Describe deployments
+        run: |
+          kubectl get deployments -o wide
+          kubectl get pods -o wide
+          kubectl describe deployment mysql -n webapp
+          kubectl describe deployment frontend -n webapp
