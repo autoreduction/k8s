@@ -31,9 +31,6 @@
         api_version: apps/v1
         wait: true
         wait_sleep: 10
-        wait_condition:
-          type: Ready
-          status: "True"
         name: "frontend"
         namespace: "webapp"
-        wait_timeout: 120
+        wait_timeout: 300
