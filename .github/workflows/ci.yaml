@@ -34,7 +34,7 @@ jobs:
 
       - name: Setup mount points
         run: |
-          mkdir -p /isis/
+          sudo mkdir -p /isis/
 
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.3.0
