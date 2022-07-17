@@ -57,6 +57,12 @@ jobs:
           helm repo update
           helm install traefik traefik/traefik
 
+      - name: Install Longhorn Helm Chart
+        run: |
+          helm repo add longhorn https://charts.longhorn.io
+          helm repo update
+          helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace
+
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
@@ -69,11 +75,8 @@ jobs:
             localhost ansible_host=localhost ansible_connection=local ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3
           # Optional, additional flags to pass to ansible-playbook
           options: |
-            --tags webapp
+            --tags mysql
 
       - name: Describe deployments
         run: |
-          kubectl get deployments -o wide
-          kubectl get pods -o wide
           kubectl describe deployment mysql -n webapp
-          kubectl describe deployment frontend -n webapp
