@@ -73,4 +73,4 @@ jobs:
 
       - name: Describe deployments
         run: |
-          kubectl describe pod mysql-0 -n webapp
+          kubectl describe deployment mysql -n webapp
