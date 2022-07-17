@@ -74,4 +74,3 @@ spec:
         - name: archive-mount
           hostPath:
             path: /isis
-            type: Directory
