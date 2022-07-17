@@ -9,7 +9,7 @@
         kind: Namespace
         state: present
 
-    - name: Ensure deployment of mysql
+    - name: Deploy manifests for mysql
       kubernetes.core.k8s:
         definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
         state: present
@@ -20,4 +20,13 @@
         - serviceaccount.yaml
         - ingressroute.yaml
         - pv.yaml
-        - deployment.yaml
+
+    - name: Deploy MySQL
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', '/templates/deployment.yaml') | from_yaml }}"
+        wait: true
+        wait_condition:
+          type: Available
+          status: "True"
+          reason: MinimumReplicasAvailable
