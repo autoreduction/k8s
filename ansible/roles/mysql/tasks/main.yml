@@ -24,7 +24,7 @@
     - name: Deploy MySQL
       kubernetes.core.k8s:
         state: present
-        definition: "{{ lookup('template', '/templates/deployment.yaml') | from_yaml }}"
+        definition: "{{ lookup('template', 'templates/deployment.yaml') | from_yaml }}"
         wait: true
         wait_condition:
           type: Available
