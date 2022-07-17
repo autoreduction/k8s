@@ -62,6 +62,7 @@ jobs:
           helm repo add longhorn https://charts.longhorn.io
           helm repo update
           helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace
+          sleep 300s
 
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
@@ -79,4 +80,5 @@ jobs:
 
       - name: Describe deployments
         run: |
+          sleep 60s
           kubectl describe deployment mysql -n webapp
