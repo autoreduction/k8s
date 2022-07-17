@@ -9,7 +9,7 @@
         kind: Namespace
         state: present
 
-    - name: Ensure deployment of frontend
+    - name: Deploy resources needed for frontend
       kubernetes.core.k8s:
         definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
         state: present

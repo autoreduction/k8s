@@ -9,7 +9,7 @@
         kind: Namespace
         state: present
 
-    - name: Ensure deployment of rest-api
+    - name: Deploy resources needed for rest-api
       kubernetes.core.k8s:
         definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
         state: present
@@ -17,4 +17,13 @@
         - service.yaml
         - serviceaccount.yaml
         - ingressroute.yaml
-        - deployment.yaml
+
+    - name: Deploy rest-api
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/deployment.yaml') | from_yaml }}"
+        wait: true
+        wait_condition:
+          type: Available
+          status: "True"
+          reason: MinimumReplicasAvailable
