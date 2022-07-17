@@ -26,3 +26,8 @@
       kubernetes.core.k8s:
         state: present
         definition: "{{ lookup('template', 'templates/deployment.yaml') | from_yaml }}"
+        wait: true
+        wait_condition:
+          type: Available
+          status: "True"
+          reason: MinimumReplicasAvailable
