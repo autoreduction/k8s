@@ -21,5 +21,22 @@
         - service.yaml
         - serviceaccount.yaml
         - ingressroute.yaml
-        - deployment.yaml
-        - django-migrate.yaml
+
+    - name: Deploy frontend
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/deployment.yaml') | from_yaml }}"
+        wait: true
+        wait_condition:
+          type: Available
+          status: "True"
+          reason: MinimumReplicasAvailable
+
+    - name: Migrate database
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/django-migrate.yaml') | from_yaml }}"
+        wait: true
+        wait_condition:
+          type: Complete
+          status: "True"
