@@ -80,5 +80,5 @@ jobs:
 
       - name: Describe deployments
         run: |
-          sleep 60s
-          kubectl describe deployment mysql -n webapp
+          sleep 120s
+          kubectl describe pod mysql-0 -n webapp
