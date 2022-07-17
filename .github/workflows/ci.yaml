@@ -69,10 +69,10 @@ jobs:
             localhost ansible_host=localhost ansible_connection=local ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3
           # Optional, additional flags to pass to ansible-playbook
           options: |
-            --tags webapp
+            --tags mysql,frontend
 
       - name: Describe deployments
         run: |
+          sleep 120s
           kubectl describe deployment mysql -n webapp
-          kubectl describe deployment frontend -n webapp
-          kubectl describe deployment rest-api -n webapp
+          kubectl describe pod frontend-0 -n webapp
