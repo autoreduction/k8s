@@ -1,7 +1,4 @@
 ---
-# Should AUTOREDUCTION_PRODUCTION env var be set
-production_var: false
-
 # Container tags to deploy
 frontend_tag: 2022-06-28T0112
 api_tag: 2022-06-28T1103
