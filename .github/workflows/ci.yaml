@@ -17,7 +17,11 @@ jobs:
         uses: ansible-community/ansible-lint-action@main
 
   e2e-test:
+    name: E2E Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        deployment: [webapp, strimzi_kafka]
     steps:
       - uses: actions/checkout@v3
 
@@ -44,14 +48,6 @@ jobs:
         uses: azure/setup-helm@v3
         id: install
 
-      - name: Install Linkerd
-        run: |
-          curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install | sh
-          export PATH=$PATH:/home/runner/.linkerd2/bin
-          linkerd check --pre
-          linkerd install | kubectl apply -f -
-          linkerd check
-
       - name: Install Traefik Helm Chart
         run: |
           helm repo add traefik https://helm.traefik.io/traefik
@@ -70,10 +66,4 @@ jobs:
             localhost ansible_host=localhost ansible_connection=local ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3
           # Optional, additional flags to pass to ansible-playbook
           options: |
-            --tags webapp,strimzi_kafka
-
-      - name: Describe deployments
-        run: |
-          kubectl describe deployment mysql -n webapp
-          kubectl describe deployment frontend -n webapp
-          kubectl describe deployment rest-api -n webapp
+            --tags ${{ matrix.deployment }}
