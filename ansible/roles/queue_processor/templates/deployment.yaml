@@ -44,8 +44,6 @@ spec:
         - name: archive-mount
           hostPath:
             path: /isis
-            type: Directory
         - name: ceph-mount
           hostPath:
             path: /instrument
-            type: Directory
