@@ -14,12 +14,12 @@
         definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
         state: present
       loop:
+        - pv.yaml
         - mysql-initdb.yaml
         - mysql-secret.yaml
         - service.yaml
         - serviceaccount.yaml
         - ingressroute.yaml
-        - pv.yaml
 
     - name: Deploy MySQL
       kubernetes.core.k8s:
@@ -30,3 +30,4 @@
           type: Available
           status: "True"
           reason: MinimumReplicasAvailable
+        wait_timeout: 300
