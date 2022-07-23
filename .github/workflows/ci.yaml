@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        deployment: [webapp, strimzi_kafka, queue-processor]
+        deployment: [webapp, strimzi_kafka, queue_processor]
     steps:
       - uses: actions/checkout@v3
 
