@@ -62,8 +62,12 @@ jobs:
           mv vault_password.txt /tmp/vault_password.txt
 
       - name: Run ansible-playbook
-        run: |
-          ansible-playbook -i ./ansible/inventory.ini ./ansible/autoreduce.yaml --tags ${{ matrix.deployment }} -e 'ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3' --vault-password-file=/tmp/vault_password.txt --limit local
+        run: >
+          ansible-playbook -i ./ansible/inventory.ini ./ansible/autoreduce.yaml
+          --tags ${{ matrix.deployment }}
+          --limit local
+          --vault-password-file=/tmp/vault_password.txt
+          -e 'ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3'
 
       - name: Delete vault password file
         run: |
