@@ -63,7 +63,7 @@ jobs:
 
       - name: Run ansible-playbook
         run: |
-          ansible-playbook -i ./ansible/inventory ./ansible/autoreduce.yaml --tags ${{ matrix.deployment }} -e 'ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3' --vault-password-file=/tmp/vault_password.txt --limit local
+          ansible-playbook -i ./ansible/inventory.ini ./ansible/autoreduce.yaml --tags ${{ matrix.deployment }} -e 'ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3' --vault-password-file=/tmp/vault_password.txt --limit local
 
       - name: Delete vault password file
         run: |
