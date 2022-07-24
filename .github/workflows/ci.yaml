@@ -55,16 +55,18 @@ jobs:
           helm repo update
           helm install traefik traefik/traefik
 
-      - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
-        with:
-          playbook: ./ansible/autoreduce.yaml
-          # Optional, encrypted vault password
-          vault_password: ${{secrets.VAULT_KEY}}
-          # Optional, literal inventory file contents
-          inventory: |
-            [local]
-            localhost ansible_host=localhost ansible_connection=local ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3
-          # Optional, additional flags to pass to ansible-playbook
-          options: |
-            --tags ${{ matrix.deployment }}
+      - name: Create file for vault password
+        run: |
+          echo ${{ secrets.VAULT_KEY }} > vault_password.txt
+          chmod 0600 vault_password.txt
+          mv vault_password.txt /tmp/vault_password.txt
+          export VAULT_PASSWORD_FILE=/tmp/vault_password.txt
+
+      - name: Run ansible-playbook
+        run: |
+          ansible-playbook -i ./ansible/inventory ./ansible/autoreduce.yaml --tags ${{ matrix.deployment }} -e 'ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3' --vault-password-file=${{ VAULT_PASSWORD_FILE }} --limit local
+
+      - name: Delete vault password file
+        run: |
+          rm -f ${{ VAULT_PASSWORD_FILE }}
+          unset VAULT_PASSWORD_FILE
