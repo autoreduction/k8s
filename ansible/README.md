@@ -13,17 +13,17 @@
 Deploy all the services (run all tasks, ignore tags)
 
 ```bash
-ansible-playbook autoreduce.yaml --tags all --vault-password-file ~/.vault_pass.txt
+ansible-playbook autoreduce.yaml --tags all --vault-password-file ~/.vault_pass.txt --limit prod
 ```
 
 Deploy only the webapp services (run frontend, mysql, rest-api - ignore all other tags)
 
 ```bash
-ansible-playbook autoreduce.yaml --tags webapp --vault-password-file ~/.vault_pass.txt
+ansible-playbook autoreduce.yaml --tags webapp --vault-password-file ~/.vault_pass.txt --limit prod
 ```
 
 Skip the queue-processor service (run all tasks, ignore queue-processor)
 
 ```bash
-ansible-playbook autoreduce.yaml --skip-tags queue_processor --vault-password-file ~/.vault_pass.txt
+ansible-playbook autoreduce.yaml --skip-tags queue_processor --vault-password-file ~/.vault_pass.txt --limit prod
 ```
