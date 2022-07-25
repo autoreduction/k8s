@@ -55,7 +55,7 @@ jobs:
 
       - name: Create file for vault password
         run: |
-          echo ${{ secrets.VAULT_KEY }} > vault_password.txt
+          echo ${{ secrets.DEV_VAULT_KEY }} > vault_password.txt
           chmod 0600 vault_password.txt
           mv vault_password.txt /tmp/vault_password.txt
 
@@ -64,7 +64,7 @@ jobs:
         run: >
           ansible-playbook autoreduce.yaml
           --tags ${{ matrix.deployment }}
-          --limit local
+          --limit dev
           --vault-password-file=/tmp/vault_password.txt
           -e 'ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3'
 
