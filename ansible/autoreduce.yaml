@@ -1,6 +1,6 @@
 ---
 - name: Deploy autoreduction services
-  hosts: localhost
+  hosts: production,development
 
   roles:
     - role: mysql
