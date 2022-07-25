@@ -16,7 +16,6 @@
       loop:
         - pv.yaml
         - mysql-initdb.yaml
-        - mysql-secret.yaml
         - service.yaml
         - serviceaccount.yaml
         - ingressroute.yaml
