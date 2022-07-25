@@ -10,7 +10,13 @@ spec:
       containers:
         - name: autoreduce-frontend
           image: ghcr.io/autoreduction/autoreduce-frontend:{{ frontend_tag }}
-          command: ["autoreduce-webapp-manage", "migrate"]
+          workingDir: /home/isisautoreduce/fixtures
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+                autoreduce-webapp-manage migrate &&
+                autoreduce-webapp-manage loaddata status_fixture software_fixture
           envFrom:
             - secretRef:
                 name: webapp-secret
