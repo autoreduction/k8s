@@ -24,7 +24,7 @@ spec:
       serviceAccountName: queue-processor-service-account
       containers:
         - name: queue-processor
-          image: "ghcr.io/autoreduction/autoreduce:{{ qp_tag }}"
+          image: "ghcr.io/autoreduction/autoreduce:{{ queue_processor_tag }}"
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:

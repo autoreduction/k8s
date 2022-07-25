@@ -20,7 +20,7 @@ spec:
             runAsGroup: 880844730
           containers:
             - name: run-detect-cron
-              image: "ghcr.io/autoreduction/autoreduce-run-detection:{{ detection_tag }}"
+              image: "ghcr.io/autoreduction/autoreduce-run-detection:{{ run_detection_tag }}"
               imagePullPolicy: IfNotPresent
               envFrom:
                 - secretRef:

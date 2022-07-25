@@ -1,6 +1,6 @@
 ---
 # Container tags to deploy
 frontend_tag: 2022-06-28T0112
-api_tag: 2022-06-28T1103
-detection_tag: 2022-07-14T0950
-qp_tag: 2022-07-15T0934
+rest_api_tag: 2022-06-28T1103
+run_detection_tag: 2022-07-14T0950
+queue_processor_tag: 2022-07-15T0934

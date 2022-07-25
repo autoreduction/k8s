@@ -11,7 +11,7 @@
   become_user: isisautoreduce
   community.docker.docker_container:
     name: queue-processor
-    image: ghcr.io/autoreduction/autoreduce:{{ qp_tag }}
+    image: ghcr.io/autoreduction/autoreduce:{{ queue_processor_tag }}
     state: started
     pull: true
     env:
