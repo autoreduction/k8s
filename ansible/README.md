@@ -9,11 +9,18 @@
 
 - Create a file at ~/.vault_pass.txt with the vault password
 - Enter correct Python path for localhost in the inventory file
+- Use ```--limit prod``` or ```--limit prod-web``` at the end of the commands to deploy using either the production or development vaults respectively
 
 Deploy all the services (run all tasks, ignore tags)
 
 ```bash
 ansible-playbook autoreduce.yaml --tags all --vault-password-file ~/.vault_pass.txt --limit prod
+```
+
+Deploy all the services using the development vault
+
+```bash
+ansible-playbook autoreduce.yaml --tags all --vault-password-file ~/.vault_pass.txt --limit dev
 ```
 
 Deploy only the webapp services (run frontend, mysql, rest-api - ignore all other tags)
