@@ -16,8 +16,8 @@ jobs:
       - name: Set up Ansible
         uses: ansible-community/ansible-lint-action@main
 
-  e2e-test:
-    name: E2E Test
+  deployment-test:
+    name: Deployment Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
