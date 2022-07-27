@@ -75,5 +75,6 @@ jobs:
       - name: Sanity check
         if: ${{ matrix.deployment }} == 'webapp'
         run: |
-          sleep 10
+          kubectl get jobs -n webapp
+          sleep 120
           kubectl get jobs -n webapp
