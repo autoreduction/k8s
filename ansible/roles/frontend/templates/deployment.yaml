@@ -40,6 +40,18 @@ spec:
               mountPath: /var/www/api/
             - name: archive-mount
               mountPath: /isis
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+            httpGet:
+              path: /
+              port: gunicorn
+              httpHeaders:
+                - name: Host
+                  value: localhost
 
         - name: nginx-sidecar
           image: nginx:stable
@@ -53,6 +65,12 @@ spec:
               mountPath: /etc/nginx/conf.d
             - name: staticfiles
               mountPath: /var/www/api/
+          readinessProbe:
+            httpGet:
+              path: "/static/"
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
 
       initContainers:
         - name: init-collectstatic
