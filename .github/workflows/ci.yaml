@@ -71,3 +71,9 @@ jobs:
       - name: Delete vault password file
         run: |
           rm -f /tmp/vault_password.txt
+
+      - name: Sanity check
+        if: ${{ matrix.deployment }} == 'webapp'
+        run: |
+          sleep 10
+          kubectl get jobs -n webapp
