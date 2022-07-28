@@ -43,13 +43,13 @@ spec:
           livenessProbe:
             httpGet:
               path: /alive
-              port: 8001
+              port: 8004
             periodSeconds: 10
             failureThreshold: 10
           readinessProbe:
             httpGet:
               path: /ready
-              port: 8001
+              port: 8004
             initialDelaySeconds: 10
             periodSeconds: 10
             failureThreshold: 3
