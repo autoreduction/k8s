@@ -12,9 +12,9 @@ spec:
     - match: Host(`reduce.isis.cclrc.ac.uk`)
       kind: Rule
       middlewares:
-        - name: frontend-gunicorn-linkerd-middleware
+        - name: frontend-hurricane-linkerd-middleware
       services:
-        - name: frontend-gunicorn
+        - name: frontend-hurricane
           port: 8000
   tls:
     secretName: ssl-cert
@@ -43,12 +43,12 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: frontend-gunicorn-linkerd-middleware
+  name: frontend-hurricane-linkerd-middleware
   namespace: webapp
 spec:
   headers:
     customRequestHeaders:
-      l5d-dst-override: "frontend-gunicorn.webapp.svc.cluster.local:8000"
+      l5d-dst-override: "frontend-hurricane.webapp.svc.cluster.local:8000"
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware

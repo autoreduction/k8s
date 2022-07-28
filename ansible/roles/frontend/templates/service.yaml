@@ -17,14 +17,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-gunicorn
+  name: frontend-hurricane
   namespace: webapp
   labels:
     app.kubernetes.io/instance: frontend
     app.kubernetes.io/name: frontend
 spec:
   ports:
-    - name: gunicorn
+    - name: hurricane
       port: 8000
   selector:
     app.kubernetes.io/instance: frontend

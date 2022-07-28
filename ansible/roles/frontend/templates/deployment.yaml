@@ -32,7 +32,7 @@ spec:
             - configMapRef:
                 name: webapp-config
           ports:
-            - name: gunicorn
+            - name: hurricane
               containerPort: 8000
               protocol: TCP
           volumeMounts:
