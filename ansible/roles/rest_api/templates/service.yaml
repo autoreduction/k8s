@@ -9,7 +9,7 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 8004
+      port: 8001
   selector:
     app.kubernetes.io/instance: rest-api
     app.kubernetes.io/name: rest-api
