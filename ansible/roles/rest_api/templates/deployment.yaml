@@ -35,13 +35,16 @@ spec:
             - name: http
               containerPort: 8001
               protocol: TCP
-          readinessProbe:
-            tcpSocket:
-              port: 8005
-            initialDelaySeconds: 5
-            periodSeconds: 10
           livenessProbe:
-            tcpSocket:
+            httpGet:
+              path: /alive
               port: 8005
-            initialDelaySeconds: 15
-            periodSeconds: 20
+            periodSeconds: 10
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8005
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
