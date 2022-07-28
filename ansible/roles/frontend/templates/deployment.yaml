@@ -41,17 +41,18 @@ spec:
             - name: archive-mount
               mountPath: /isis
           livenessProbe:
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 6
             httpGet:
-              path: /
-              port: gunicorn
-              httpHeaders:
-                - name: Host
-                  value: localhost
+              path: /alive
+              port: 8001
+            periodSeconds: 10
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8001
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
 
         - name: nginx-sidecar
           image: nginx:stable
