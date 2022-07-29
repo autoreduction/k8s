@@ -18,3 +18,12 @@
     owner: "isisautoreduce"
     group: "isisautoreduce"
     mode: "u=rwx,g=,o="
+
+- name: Ensure /output directory exists
+  become: true
+  ansible.builtin.file:
+    path: /output/
+    state: directory
+    owner: "isisautoreduce"
+    group: "isisautoreduce"
+    mode: "u=rwx,g=rw,o=rw"
