@@ -32,7 +32,7 @@ spec:
             - configMapRef:
                 name: webapp-config
           ports:
-            - name: gunicorn
+            - name: http
               containerPort: 8000
               protocol: TCP
           volumeMounts:
@@ -40,12 +40,25 @@ spec:
               mountPath: /var/www/api/
             - name: archive-mount
               mountPath: /isis
+          livenessProbe:
+            httpGet:
+              path: /alive
+              port: 8004
+            periodSeconds: 10
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8004
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
 
         - name: nginx-sidecar
           image: nginx:stable
           imagePullPolicy: Always
           ports:
-            - name: http
+            - name: nginx
               containerPort: 8002
               protocol: TCP
           volumeMounts:
@@ -53,6 +66,12 @@ spec:
               mountPath: /etc/nginx/conf.d
             - name: staticfiles
               mountPath: /var/www/api/
+          readinessProbe:
+            httpGet:
+              path: "/static/"
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
 
       initContainers:
         - name: init-collectstatic
