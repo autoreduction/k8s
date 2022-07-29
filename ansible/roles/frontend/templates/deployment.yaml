@@ -32,7 +32,7 @@ spec:
             - configMapRef:
                 name: webapp-config
           ports:
-            - name: hurricane
+            - name: http
               containerPort: 8000
               protocol: TCP
           volumeMounts:
@@ -45,7 +45,7 @@ spec:
           image: nginx:stable
           imagePullPolicy: Always
           ports:
-            - name: http
+            - name: nginx
               containerPort: 8002
               protocol: TCP
           volumeMounts:

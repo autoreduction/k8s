@@ -12,9 +12,9 @@ spec:
     - match: Host(`reduce.isis.cclrc.ac.uk`)
       kind: Rule
       middlewares:
-        - name: frontend-hurricane-linkerd-middleware
+        - name: frontend-linkerd-middleware
       services:
-        - name: frontend-hurricane
+        - name: frontend
           port: 8000
   tls:
     secretName: ssl-cert
@@ -33,9 +33,9 @@ spec:
     - match: Host(`reduce.isis.cclrc.ac.uk`) && PathPrefix(`/static`)
       kind: Rule
       middlewares:
-        - name: frontend-nginx-linkerd-middleware
+        - name: nginx-linkerd-middleware
       services:
-        - name: frontend-nginx
+        - name: nginx
           port: 8002
   tls:
     secretName: ssl-cert
@@ -43,19 +43,19 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: frontend-hurricane-linkerd-middleware
+  name: frontend-linkerd-middleware
   namespace: webapp
 spec:
   headers:
     customRequestHeaders:
-      l5d-dst-override: "frontend-hurricane.webapp.svc.cluster.local:8000"
+      l5d-dst-override: "frontend.webapp.svc.cluster.local:8000"
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: frontend-nginx-linkerd-middleware
+  name: nginx-linkerd-middleware
   namespace: webapp
 spec:
   headers:
     customRequestHeaders:
-      l5d-dst-override: "frontend-nginx.webapp.svc.cluster.local:8002"
+      l5d-dst-override: "nginx.webapp.svc.cluster.local:8002"
