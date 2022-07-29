@@ -21,7 +21,7 @@
       AUTOREDUCE_API_URL: "http://rest-api.webapp.svc.cluster.local:8001/api"
       ICAT_AUTH: "simple"
       DATABASE_NAME: "autoreduction"
-      DATABASE_HOST: "172.16.100.152"
+      DATABASE_HOST: "172.16.101.215"
       DATABASE_PORT: "3306"
       DATABASE_USERNAME: "{{ db_secrets.username }}"
       DATABASE_PASSWORD: "{{ db_secrets.user_password }}"
@@ -32,7 +32,7 @@
       SFTP_PASSWORD: "{{ sftp_secrets.password }}"
       SFTP_HOST: "{{ sftp_secrets.host }}"
       SFTP_PORT: "{{ sftp_secrets.port | string }}"
-      KAFKA_BROKER_URL: "172.16.100.152:32698"
+      KAFKA_BROKER_URL: "172.16.101.215:32335"
       KAFKA_TOPIC: "data_ready"
       KAFKA_SASL_USERNAME: "{{ kafka_secrets.sasl_username }}"
       KAFKA_SASL_PASSWORD: "{{ kafka_secrets.sasl_password }}"
@@ -40,6 +40,7 @@
       KAFKA_SECURITY_PROTOCOL: "SASL_PLAINTEXT"
     volumes:
       - /home/isisautoreduce/.autoreduce:/home/isisautoreduce/.autoreduce:rw
+      - /output:/output:rw
       - /instrument:/instrument:rw
       - /isis:/isis
       - /var/run/docker.sock:/var/run/docker.sock:ro
