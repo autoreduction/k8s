@@ -69,7 +69,7 @@ spec:
           readinessProbe:
             httpGet:
               path: "/static/"
-              port: http
+              port: nginx
             initialDelaySeconds: 5
             periodSeconds: 5
 
