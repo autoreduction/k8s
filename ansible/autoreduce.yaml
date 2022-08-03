@@ -1,6 +1,6 @@
 ---
 - name: Deploy autoreduction services
-  hosts: local
+  hosts: prod,dev
 
   roles:
     - role: mysql
@@ -17,7 +17,7 @@
       tags: ["strimzi_kafka", "autoreduce"]
 
 - name: Deploy qp external services
-  hosts: openstack
+  hosts: qp_external_prod,qp_external_dev
   vars:
     pip_install_packages:
       - name: docker

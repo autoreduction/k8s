@@ -24,7 +24,7 @@ spec:
       serviceAccountName: rest-api-service-account
       containers:
         - name: rest-api
-          image: "ghcr.io/autoreduction/autoreduce-rest-api:{{ api_tag }}"
+          image: "ghcr.io/autoreduction/autoreduce-rest-api:{{ rest_api_tag }}"
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:

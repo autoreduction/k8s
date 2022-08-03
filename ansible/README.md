@@ -7,23 +7,37 @@
 
 ## Example Deployment Commands
 
-- Create a file at ~/.vault_pass.txt with the vault password
+- Create a file at ~/.vault_pass.txt with the vault password (_password_ for the dev vault)
 - Enter correct Python path for localhost in the inventory file
+- If deploying qp-external, use ```--limit qp_external_prod``` or ```--limit qp_external_dev``` at the end of the commands to deploy using either the production or development vaults respectively
+- Else use ```--limit prod``` or ```--limit dev``` at the end of the commands to deploy using either the production or development vaults respectively
 
 Deploy all the services (run all tasks, ignore tags)
 
 ```bash
-ansible-playbook autoreduce.yaml --tags all --vault-password-file ~/.vault_pass.txt
+ansible-playbook autoreduce.yaml --tags all --vault-password-file ~/.vault_pass.txt --limit prod
+```
+
+Deploy all the services using the development vault
+
+```bash
+ansible-playbook autoreduce.yaml --tags all --vault-password-file ~/.vault_pass.txt --limit dev
 ```
 
 Deploy only the webapp services (run frontend, mysql, rest-api - ignore all other tags)
 
 ```bash
-ansible-playbook autoreduce.yaml --tags webapp --vault-password-file ~/.vault_pass.txt
+ansible-playbook autoreduce.yaml --tags webapp --vault-password-file ~/.vault_pass.txt --limit prod
+```
+
+Deploy only the external queue-processor
+
+```bash
+ansible-playbook autoreduce.yaml --tags qp_external --vault-password-file ~/.vault_pass.txt --limit qp_external_prod
 ```
 
 Skip the queue-processor service (run all tasks, ignore queue-processor)
 
 ```bash
-ansible-playbook autoreduce.yaml --skip-tags queue_processor --vault-password-file ~/.vault_pass.txt
+ansible-playbook autoreduce.yaml --skip-tags queue_processor --vault-password-file ~/.vault_pass.txt --limit prod
 ```

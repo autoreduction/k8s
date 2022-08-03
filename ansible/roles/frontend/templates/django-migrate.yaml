@@ -4,7 +4,7 @@ metadata:
   name: django-migrations
   namespace: webapp
 spec:
-  ttlSecondsAfterFinished: 0
+  ttlSecondsAfterFinished: 10
   template:
     spec:
       containers:
@@ -15,8 +15,8 @@ spec:
           args:
             - -c
             - >-
-                autoreduce-webapp-manage migrate &&
-                autoreduce-webapp-manage loaddata status_fixture software_fixture
+              autoreduce-webapp-manage migrate &&
+              autoreduce-webapp-manage loaddata status_fixture software_fixture
           envFrom:
             - secretRef:
                 name: webapp-secret

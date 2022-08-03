@@ -24,7 +24,7 @@ spec:
       serviceAccountName: queue-processor-service-account
       containers:
         - name: queue-processor
-          image: "ghcr.io/autoreduction/autoreduce:{{ qp_tag }}"
+          image: "ghcr.io/autoreduction/autoreduce:{{ queue_processor_tag }}"
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
@@ -44,8 +44,6 @@ spec:
         - name: archive-mount
           hostPath:
             path: /isis
-            type: Directory
         - name: ceph-mount
           hostPath:
             path: /instrument
-            type: Directory

@@ -9,13 +9,22 @@
         kind: Namespace
         state: present
 
-    - name: Ensure deployment of queue-processor
+    - name: Deploy resources needed for queue-processor
       kubernetes.core.k8s:
         definition: "{{ lookup('template', 'templates/%s' % item) | from_yaml_all | list }}"
         state: present
       loop:
-        - qp-configmap.yaml.j2
-        - qp-secret.yaml.j2
-        - service.yaml.j2
-        - serviceaccount.yaml.j2
-        - deployment.yaml.j2
+        - qp-configmap.yaml
+        - qp-secret.yaml
+        - service.yaml
+        - serviceaccount.yaml
+
+    - name: Deploy queue-processor
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/deployment.yaml') | from_yaml }}"
+        wait: true
+        wait_condition:
+          type: Available
+          status: "True"
+          reason: MinimumReplicasAvailable

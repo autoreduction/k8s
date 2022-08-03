@@ -15,8 +15,6 @@ spec:
       app.kubernetes.io/name: mysql
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
         app.kubernetes.io/instance: mysql
         app.kubernetes.io/name: mysql
@@ -28,10 +26,8 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: "mysql-secret"
-                  key: DATABASE_ROOT_PASSWORD
+              value: {{ db_secrets.root_password }}
+
           ports:
             - name: mysql
               containerPort: 3306
