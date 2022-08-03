@@ -3,6 +3,8 @@
   hosts: prod,dev
 
   roles:
+    - role: strimzi_kafka
+      tags: ["strimzi_kafka", "autoreduce"]
     - role: mysql
       tags: ["mysql", "webapp", "autoreduce"]
     - role: frontend
@@ -12,9 +14,7 @@
     - role: run_detection
       tags: ["run_detection", "autoreduce"]
     - role: queue_processor
-      tags: ["queue_processor", "autoreduce"]
-    - role: strimzi_kafka
-      tags: ["strimzi_kafka", "autoreduce"]
+      tags: ["queue_processor"]
 
 - name: Deploy qp external services
   hosts: qp_external_prod,qp_external_dev
