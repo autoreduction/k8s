@@ -3,6 +3,8 @@
   hosts: prod,dev
 
   roles:
+    - role: traefik
+      tags: ["traefik", "autoreduce"]
     - role: strimzi_kafka
       tags: ["strimzi_kafka", "autoreduce"]
     - role: mysql
