@@ -33,3 +33,8 @@
   kubernetes.core.k8s:
     state: present
     definition: "{{ lookup('template', 'templates/user.yaml') | from_yaml }}"
+
+- name: Create Kafka IngressRoute
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'templates/ingressroute.yaml') | from_yaml }}"
