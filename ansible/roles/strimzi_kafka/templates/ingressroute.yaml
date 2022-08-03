@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: kafka-ingress-tcp
+  namespace: kafka
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - kafka
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: autoreduce-cluster-kafka-external-bootstrap
+          port: 9094
