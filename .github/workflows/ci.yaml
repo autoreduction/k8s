@@ -47,17 +47,20 @@ jobs:
         uses: azure/setup-helm@v3
         id: install
 
-      - name: Install Traefik Helm Chart
-        run: |
-          helm repo add traefik https://helm.traefik.io/traefik
-          helm repo update
-          helm install traefik traefik/traefik
-
       - name: Create file for vault password
         run: |
           echo ${{ secrets.DEV_VAULT_KEY }} > vault_password.txt
           chmod 0600 vault_password.txt
           mv vault_password.txt /tmp/vault_password.txt
+
+      - name: Install Traefik
+        working-directory: ./ansible
+        run: >
+          ansible-playbook autoreduce.yaml
+          --tags traefik
+          --limit dev
+          --vault-password-file=/tmp/vault_password.txt
+          -e 'ansible_python_interpreter=/opt/hostedtoolcache/Python/3.8.13/x64/bin/python3'
 
       - name: Run ansible-playbook
         working-directory: ./ansible
