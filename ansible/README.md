@@ -2,7 +2,7 @@
 
 - Must have Kubernetes, Helm, Ansible, and Ansible-Galaxy installed in your Python environment
 - Install the ansible-galaxy requirements with ```ansible-galaxy install -r requirements.yaml```
-- Deployment cluster should be specified in ~/.kube/config and set as the current context
+- Deployment cluster kubeconfig should be specified in either ~/.kube/config, or the path to the config should be set as KUBECONFIG environmental variable in the shell
 - Set the Image tag you wish to deploy in group_vars
 - Set the node IP address in group_vars - it can be any node in the cluster
 
