@@ -19,6 +19,9 @@ jobs:
   deployment-test:
     name: Deployment Test
     runs-on: ubuntu-latest
+    env:
+      PY_COLORS: '1'
+      ANSIBLE_FORCE_COLOR: '1'
     strategy:
       matrix:
         deployment: [webapp, strimzi_kafka, queue_processor]
