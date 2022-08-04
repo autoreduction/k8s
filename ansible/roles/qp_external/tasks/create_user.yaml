@@ -1,4 +1,11 @@
 ---
+- name: Ensure group "isisautoreduce" exists with correct gid
+  become: true
+  ansible.builtin.group:
+    name: isisautoreduce
+    state: present
+    gid: "{{ vault_autoreduction_user_id }}"
+
 # the uid of the runtime user is important as it used to verify the identity
 # of the user when interacting with ceph
 - name: Add runtime user
@@ -7,6 +14,7 @@
     name: isisautoreduce
     uid: "{{ vault_autoreduction_user_id }}"
     shell: /bin/bash
+    group: isisautoreduce
     groups: docker
     append: true
 
