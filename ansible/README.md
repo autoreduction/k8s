@@ -4,6 +4,7 @@
 - Install the ansible-galaxy requirements with ```ansible-galaxy install -r requirements.yaml```
 - Deployment cluster should be specified in ~/.kube/config and set as the current context
 - Set the Image tag you wish to deploy in group_vars
+- Set the node IP address in group_vars - it can be any node in the cluster
 
 ## Example Deployment Commands
 
