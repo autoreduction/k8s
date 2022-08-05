@@ -38,7 +38,7 @@ To deploy the whole autoreduction service, run these two commands:
 
 ```bash
 ansible-playbook autoreduce.yaml --tags autoreduce --ask-vault-pass --limit prod
-ansible-playbook autoreduce.yaml --tags qp_external --ask-vault-pass --limit qp_external_prod
+ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp_external_prod
 ```
 
 ### Other examples
@@ -58,7 +58,7 @@ ansible-playbook autoreduce.yaml --tags webapp --ask-vault-pass --limit prod
 Deploy only the external queue-processor using the development vault
 
 ```bash
-ansible-playbook autoreduce.yaml --tags qp_external --ask-vault-pass --limit qp_external_dev
+ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp_external_dev
 ```
 
 Skip the run-detection when deploying autoreduction (run autoreduction-tagged tasks, ignoring run-detection)
