@@ -24,6 +24,15 @@
     pip_install_packages:
       - name: docker
   roles:
+    - role: dannixon.system.package_updates
+      become: true
+      tags: ["qp_external"]
+    - role: dannixon.system.interactive_users
+      become: true
+      tags: ["qp_external"]
+    - role: dannixon.system.inspection_tools
+      become: true
+      tags: ["qp_external"]
     - role: geerlingguy.pip
       become: true
       tags: ["qp_external"]
