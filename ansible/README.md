@@ -3,8 +3,9 @@
 - Must have Kubernetes, Helm, Ansible, and Ansible-Galaxy installed in your Python environment
 - Install the ansible-galaxy requirements with ```ansible-galaxy install -r requirements.yaml```
 - Deployment cluster kubeconfig should be specified in either ~/.kube/config, or the path to the config should be set as KUBECONFIG environmental variable in the shell. To get the kubeconfig, follow the instructions in the [README](https://github.com/autoreduction/k8s-infra) on the k8s-infra repo.
-- Set the Image tag you wish to deploy in group_vars
-- Set the node IP address in group_vars - it can be any node in the cluster
+- Set the Image tags you wish to deploy in group_vars [vars.yaml](./group_vars/all/vars.yaml)
+- Set the node IP address in group_vars [vars.yaml](./group_vars/all/vars.yaml) - it can be any node in the cluster
+- Ensure the SSH keys of the users you wish to have access to the VM are in [users.yaml](./group_vars/all/users.yaml)
 - When prompted by the playbook, enter in your FED ID password and the vault pass
 
 ## Tags
