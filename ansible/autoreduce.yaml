@@ -25,19 +25,14 @@
       - name: docker
   roles:
     - role: dannixon.system.package_updates
-      become: true
       tags: ["qp_external"]
     - role: dannixon.system.system
-      become: true
       tags: ["qp_external"]
     - role: dannixon.system.inspection_tools
-      become: true
       tags: ["qp_external"]
     - role: dannixon.system.interactive_users
-      become: true
       tags: ["qp_external"]
     - role: dannixon.services.sshd
-      become: true
       tags: ["qp_external"]
     - role: geerlingguy.pip
       become: true
