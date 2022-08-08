@@ -7,6 +7,3 @@ queue_processor_tag: 2022-08-04t0142
 
 # IP Adresses of one of nodes in the cluster
 node_ip: "172.16.100.194"
-
-# Whether to reboot after system tasks
-system_reboot: true

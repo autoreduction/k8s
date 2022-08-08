@@ -39,7 +39,7 @@ To deploy the whole autoreduction service, run these two commands:
 
 ```bash
 ansible-playbook autoreduce.yaml --tags autoreduce --ask-vault-pass --limit prod
-ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp_external_prod
+ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp_external_prod -e system_reboot=true
 ```
 
 ### Other examples
