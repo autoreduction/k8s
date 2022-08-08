@@ -3,8 +3,9 @@
 - Must have Kubernetes, Helm, Ansible, and Ansible-Galaxy installed in your Python environment
 - Install the ansible-galaxy requirements with ```ansible-galaxy install -r requirements.yaml```
 - Deployment cluster kubeconfig should be specified in either ~/.kube/config, or the path to the config should be set as KUBECONFIG environmental variable in the shell. To get the kubeconfig, follow the instructions in the [README](https://github.com/autoreduction/k8s-infra) on the k8s-infra repo.
-- Set the Image tag you wish to deploy in group_vars
-- Set the node IP address in group_vars - it can be any node in the cluster
+- Set the Image tags you wish to deploy in group_vars [vars.yaml](./group_vars/all/vars.yaml)
+- Set the node IP address in group_vars [vars.yaml](./group_vars/all/vars.yaml) - it can be any node in the cluster
+- Ensure the SSH keys of the users you wish to have access to the external queue-processor are in [users.yaml](./group_vars/all/users.yaml)
 - When prompted by the playbook, enter in your FED ID password and the vault pass
 
 ## Tags
@@ -38,7 +39,7 @@ To deploy the whole autoreduction service, run these two commands:
 
 ```bash
 ansible-playbook autoreduce.yaml --tags autoreduce --ask-vault-pass --limit prod
-ansible-playbook autoreduce.yaml --tags qp_external --ask-vault-pass --limit qp_external_prod
+ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp_external_prod -e system_reboot=true
 ```
 
 ### Other examples
@@ -58,7 +59,7 @@ ansible-playbook autoreduce.yaml --tags webapp --ask-vault-pass --limit prod
 Deploy only the external queue-processor using the development vault
 
 ```bash
-ansible-playbook autoreduce.yaml --tags qp_external --ask-vault-pass --limit qp_external_dev
+ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp_external_dev
 ```
 
 Skip the run-detection when deploying autoreduction (run autoreduction-tagged tasks, ignoring run-detection)

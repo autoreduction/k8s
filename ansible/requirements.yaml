@@ -4,4 +4,6 @@ roles:
   - src: geerlingguy.pip
 
 collections:
+  - git+https://github.com/DanNixon/ansible-system.git
+  - git+https://github.com/DanNixon/ansible-services.git
   - name: kubernetes.core
