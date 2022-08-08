@@ -16,3 +16,8 @@ Additional services:
 
 - Longhorn (for storing persistent data)
 - Linkerd (Serivce Mesh)
+
+## Contributing setup
+
+This repository has a pre-commit config availiable to assist with development, run this command with pre-commit on your terminal to install pre-commit hooks, so it runs when you commit to a branch:
+`pre-commit install`
