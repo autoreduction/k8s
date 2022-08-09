@@ -42,7 +42,7 @@
     path: /isis
     src: "//isis.cclrc.ac.uk/inst$/"
     fstype: cifs
-    opts: "noserverino,vers=2.1,credentials=/archive.creds,_netdev"
+    opts: "noserverino,vers=3.0,credentials=/archive.creds,_netdev"
     state: mounted
 
 - name: Ensure /archive symlink is present
