@@ -1,9 +1,9 @@
 ---
 # Container tags to deploy
-frontend_tag: 2022-08-03t1751
-rest_api_tag: 2022-08-03t1710
-run_detection_tag: 2022-07-14T0950
+frontend_tag: 2022-08-07t0909
+rest_api_tag: 2022-08-07t0911
+run_detection_tag: 2022-07-14t0950
 queue_processor_tag: 2022-08-04t0142
 
 # IP Adresses of one of nodes in the cluster
-node_ip: "172.16.100.194"
+node_ip: "172.16.112.241"
