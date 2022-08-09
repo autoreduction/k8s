@@ -19,7 +19,7 @@
       tags: ["queue_processor"]
 
 - name: Deploy qp external services
-  hosts: qp_external_prod,qp_external_dev
+  hosts: qp-external-1,qp-external-dev-1
   vars:
     pip_install_packages:
       - name: docker
