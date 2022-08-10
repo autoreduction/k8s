@@ -31,7 +31,7 @@ Specific roles can be run by calling on their tags:
 
 - Password for the development vault is _password_
 - If deploying anything apart from qp-external, use ```--limit prod``` or ```--limit dev``` at the end of the commands to deploy using either the production or development vaults respectively
-- If deploying qp-external, use ```--limit qp_external_prod``` or ```--limit qp_external_dev``` at the end of the commands to deploy using either the production or development vaults respectively
+- If deploying qp-external, use ```--limit qp-external-1``` or ```--limit qp-external-dev-1``` at the end of the commands to deploy using either the production or development vaults respectively
 
 ## Full Deployment
 
@@ -39,7 +39,7 @@ To deploy the whole autoreduction service, run these two commands:
 
 ```bash
 ansible-playbook autoreduce.yaml --tags autoreduce --ask-vault-pass --limit prod
-ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp_external_prod -e system_reboot=true
+ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp-external-1 -e system_reboot=true
 ```
 
 ### Other examples
@@ -59,7 +59,7 @@ ansible-playbook autoreduce.yaml --tags webapp --ask-vault-pass --limit prod
 Deploy only the external queue-processor using the development vault
 
 ```bash
-ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp_external_dev
+ansible-playbook autoreduce.yaml -K --tags qp_external --ask-vault-pass --limit qp-external-dev-1
 ```
 
 Skip the run-detection when deploying autoreduction (run autoreduction-tagged tasks, ignoring run-detection)
