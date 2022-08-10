@@ -26,3 +26,12 @@
     owner: "isisautoreduce"
     group: "isisautoreduce"
     mode: "u=rwx,g=,o="
+
+- name: Ensures ~/.mantid dir exists
+  become: true
+  ansible.builtin.file:
+    path: /home/isisautoreduce/.mantid/
+    state: directory
+    owner: "isisautoreduce"
+    group: "isisautoreduce"
+    mode: "u=rwx,g=rx,o=rx"
