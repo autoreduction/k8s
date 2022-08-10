@@ -5,6 +5,13 @@
     name: acl
     state: present
 
+- name: Ensure Mantid.user.properties is present
+  become: true
+  ansible.builtin.copy:
+    src: Mantid.user.properties
+    dest: /home/isisautoreduce/.mantid/
+    mode: "u=rw,g=r,o=r"
+
 # Start the container using the user in the Docker group (isisautoreduce)
 - name: Start the container
   become: true
