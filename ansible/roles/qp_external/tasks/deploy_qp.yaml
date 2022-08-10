@@ -47,3 +47,4 @@
     detach: true
     comparisons:
       image: strict
+    restart_policy: always
