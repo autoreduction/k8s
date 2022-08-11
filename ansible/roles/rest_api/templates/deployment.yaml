@@ -35,6 +35,9 @@ spec:
             - name: http
               containerPort: 8001
               protocol: TCP
+          volumeMounts:
+            - name: archive-mount
+              mountPath: /isis
           livenessProbe:
             httpGet:
               path: /alive
@@ -48,3 +51,8 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 10
             failureThreshold: 3
+
+      volumes:
+        - name: archive-mount
+          hostPath:
+            path: /isis
